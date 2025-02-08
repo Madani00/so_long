@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 20:44:10 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/06 22:31:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/07 22:56:54 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			ft_isalnum(int c);
 int			ft_isdigit(int c);
 int			ft_isascii(int c);
 int			ft_isprint(int c);
-size_t		ft_strlen(char *s);
+int			ft_strlen(char *s);
 void		*ft_memset(void *s, int c, size_t n);
 void		ft_bzero(void *s, size_t n);
 void		*ft_memcpy(void *dst, const void *src, int n);

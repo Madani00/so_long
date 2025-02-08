@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   so_long1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/22 11:26:18 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/07 22:52:37 by eamchart         ###   ########.fr       */
+/*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
+/*   Updated: 2025/02/08 11:37:44 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "so_long.h"
 
-int	ft_strlen(char *s)
+void check_map_exetension(char *map_file)
 {
-	int	i;
-
-	if (!s)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
+	if (!(ft_strnstr(map_file, ".ber", ft_strlen(map_file))))
 	{
-		i++;
+		ft_error("Error\nMap not found dummy 🗾");
+		exit(EXIT_FAILURE);
 	}
-	return (i);
 }
+

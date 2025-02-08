@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:33:51 by eamchart          #+#    #+#             */
-/*   Updated: 2025/01/09 16:42:09 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:37:16 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!new)
-		return (free(s1), NULL);
+		return (NULL);
 	i = -1;
 	while (s1[++i])
 		new[i] = s1[i];

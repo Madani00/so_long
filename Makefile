@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 MK = make
 
-SRCS = main.c get_next_line.c
+SRCS = main.c get_next_line.c so_long1.c free_error.c
 
 OBJS = $(SRCS:.c=.o)
 
