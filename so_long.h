@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/08 14:52:33 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/08 21:38:24 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@
 typedef struct map
 {
 	char **map;
+	char **c_map;
 	int row;
 	int column;
 	int collect;
 	int player;
 	int exit;
+	int player_x;
+	int player_y;
 } s_info;
 
 char *get_next_line(int fd);
@@ -42,6 +45,11 @@ void allocate_map(char *all_lines, s_info **data);
 void check_map_exetension(char *map_file);
 void free_error(s_info *data, char *msg);
 void	free_args(char **arg);
-void	free_map(char **arg, int len);
+void	free_map(s_info **data);
+
+void copy_map(s_info **data); // sdfdf
+void asly(s_info **data); //kdf
+
+void flood_fill(s_info **data, int x, int y, char *target, char replace);
 
 #endif

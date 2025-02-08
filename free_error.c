@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:37:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/08 14:51:40 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:27:20 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ void	free_args(char **arg)
 	free(arg);
 }
 
-void	free_map(char **arg, int len)
+void	free_map(s_info **data)
 {
 	int	i;
 
 	i = 0;
-	while (i < len)
+	while (i < (*data)->column)
 	{
-		free(arg[i]);
+		free((*data)->map[i]);
 		i++;
 	}
-	free(arg);
+	free((*data)->map);
 }
 
 void free_error(s_info *data, char *msg)
