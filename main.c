@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/08 21:54:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:24:23 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,35 @@ void check_map_valid(char **av, s_info **data)
 	printf("PLAYER : %d\n", (*data)->player);
 	printf("EXIT : %d\n", (*data)->exit);
 	printf("COLLECT : %d\n", (*data)->collect);
+	if (!correct_components(data))
+		free_error((*data), "Oops! Number of map's components INVALID 😓");
 }
 
-int find_target(char *targets, char pos, s_info **data)
+
+int correct_components(s_info **data)
+{
+	if ((*data)->player != 1 || (*data)->exit != 1|| (*data)->collect == 0)
+		return (0);
+
+	int i;
+	int jj;
+
+	i = 1;
+	while (i < (*data)->column - 1)
+	{
+		jj = 1;
+		while (jj < (*data)->row - 1)
+		{
+			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'E' || (*data)->c_map[i][jj] == 'C')
+				return (0);
+			jj++;
+		}
+		i++;
+	}
+	return (1);
+}
+
+int increment_components(char *targets, char pos, s_info **data)
 {
 	int i;
 
@@ -195,7 +221,7 @@ void flood_fill(s_info **data, int x, int y, char *target, char replace)
 {
 	if (x < 0 || x >= (*data)->column || y < 0 || y >= (*data)->row)
 		return;
-	if (find_target(target, (*data)->c_map[x][y], data))
+	if (increment_components(target, (*data)->c_map[x][y], data))
 		return;
 	if ((*data)->c_map[x][y] == replace)
 		return;

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/08 21:38:24 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:22:43 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void copy_map(s_info **data); // sdfdf
 void asly(s_info **data); //kdf
 
 void flood_fill(s_info **data, int x, int y, char *target, char replace);
+int correct_components(s_info **data);
 
 #endif

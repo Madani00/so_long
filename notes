@@ -1,9 +1,21 @@
 size > 3 ------ row and column
 
 
-11111
-10001
-10001
-11111
+11111111
+10000001
+1CCC00C1
+100P0001
+10000011
+100E00E1
+11111111
 
+if player == 2
+if exit == 2 /// mmm if closed the second exit
+if collect == 0
+
+
+111
+1P1
+1E1
+// need to handle this case
 
