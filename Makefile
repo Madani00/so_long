@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 MK = make
 
-SRCS = main.c get_next_line.c so_long1.c free_error.c
+SRCS = main.c get_next_line.c so_long1.c free_error.c utils1.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -12,7 +12,7 @@ all : $(NAME)
 
 $(NAME): $(OBJS)
 		$(MK) -C ./Libft
-		$(CC) $(CFLAGS) $(OBJS) ./Libft/libft.a -o $(NAME)
+		$(CC) $(CFLAGS) $(OBJS) -lmlx -lX11 -lXext ./Libft/libft.a -o $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@

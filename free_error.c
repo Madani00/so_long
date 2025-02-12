@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:37:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/08 15:27:20 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/09 14:19:59 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ void	free_map(s_info **data)
 	while (i < (*data)->column)
 	{
 		free((*data)->map[i]);
+		free((*data)->c_map[i]);
 		i++;
 	}
 	free((*data)->map);
+	free((*data)->c_map);
 }
 
 void free_error(s_info *data, char *msg)

@@ -6,121 +6,24 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/09 12:24:23 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/12 12:18:08 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void initiaze_struct(s_info **data)
-{
-	(*data) = malloc(sizeof(s_info));
-	(*data)->map = NULL;
-	(*data)->c_map = NULL;
-	(*data)->row = 0;
-	(*data)->column = 0;
-	(*data)->collect = 0;
-	(*data)->player = 0;
-	(*data)->exit = 0;
-}
-
-void get_mapsize(char **av, s_info **data)
-{
-	char *line;
-	int fd;
-	char *all_lines;
-
-	fd = open(av[1], O_RDONLY);
-	all_lines = NULL;
-	line = get_next_line(fd);
-	if (!line)
-		free_error((*data), "Oops! This map is invalid dummy 😓");
-	(*data)->row = ft_strlen(line) - 1;
-	while (line != NULL)
-	{
-		if ((*data)->row != (ft_strlen(line) - 1))
-		{
-			free(all_lines);
-			free(line);
-			free_error((*data), "Oops! This map is invalid dummy 😓");
-		}
-		all_lines = ft_strjoin(all_lines, line);
-		(*data)->column++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	allocate_map(all_lines, data); // 24
-}
-
-void allocate_map(char *all_lines, s_info **data)
-{
-	char **lines;
-	int index;
-
-	if ((*data)->column < 3 || (*data)->row < 3)
-	{
-		free(all_lines);
-		free_error((*data), "Oops! This map is so small, even 🐁 would get lost! 😓");
-	}
-	lines = ft_split(all_lines, '\n');
-	free(all_lines);
-	(*data)->map = malloc(sizeof(char *) * (*data)->column);
-	(*data)->c_map = malloc(sizeof(char *) * (*data)->column);
-	if (!(*data)->map || !(*data)->c_map)
-		exit(EXIT_FAILURE);
-	index = 0;
-	while (index < (*data)->column)
-	{
-		(*data)->map[index] = ft_strdup(lines[index]);
-		(*data)->c_map[index] = ft_strdup(lines[index]);
-		index++;
-	}
-	free_args(lines);
-}
-
-int check_ones(char *str)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '1')
-			i++;
-		else
-			return (0);
-	}
-	return (1);
-}
-
-void get_player_position(s_info **data, char *map_row, int index)
-{
-	int i;
-
-	i = 0;
-	while (i < (*data)->row)
-	{
-		if (map_row[i] == 'P')
-		{
-			(*data)->player_x = index;
-			(*data)->player_y = i;
-		}
-		i++;
-	}
-}
-
 void check_map_walls(s_info **data)
 {
 	int i;
 
-	i = 0;
-	while (i < (*data)->column)
+	if (!check_ones((*data)->map[0]) || !check_ones((*data)->map[(*data)->column - 1]))
 	{
-		if (!check_ones((*data)->map[0]) || !check_ones((*data)->map[(*data)->column - 1]))
-		{
-			free_map(data);
-			free_error((*data), "Oops! This map is invalid dummy 😓");
-		}
+		free_map(data);
+		free_error((*data), "Oops! This map is invalid dummy 😓");
+	}
+	i = 1;
+	while (i < (*data)->column - 1)
+	{
 		if ((*data)->map[i][0] != '1' || (*data)->map[i][(*data)->row - 1] != '1')
 		{
 			free_map(data);
@@ -155,43 +58,48 @@ void copy_map(s_info **data)
 
 void check_map_valid(char **av, s_info **data)
 {
-	check_map_exetension(av[1]);
+	//check_map_exetension(av[1]);
 	initiaze_struct(data);
 	get_mapsize(av, data);
 	check_map_walls(data);
-	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PEC", 'x');
+	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PC", 'x');
 	printf("-----copy-------\n");
 	copy_map(data);
 	printf("-----asly -------\n");
 	asly(data);
 	printf("PLAYER : %d\n", (*data)->player);
-	printf("EXIT : %d\n", (*data)->exit);
 	printf("COLLECT : %d\n", (*data)->collect);
 	if (!correct_components(data))
+	{
+		free_map(data);
 		free_error((*data), "Oops! Number of map's components INVALID 😓");
+	}
 }
-
 
 int correct_components(s_info **data)
 {
-	if ((*data)->player != 1 || (*data)->exit != 1|| (*data)->collect == 0)
-		return (0);
-
 	int i;
 	int jj;
 
+	if ((*data)->player != 1 || (*data)->collect == 0)
+		return (0);
 	i = 1;
 	while (i < (*data)->column - 1)
 	{
 		jj = 1;
 		while (jj < (*data)->row - 1)
 		{
-			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'E' || (*data)->c_map[i][jj] == 'C')
+			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C')
 				return (0);
+			if ((*data)->c_map[i][jj] == 'E')
+				(*data)->exit++;
 			jj++;
 		}
 		i++;
 	}
+	printf("EXIT : %d\n", (*data)->exit);
+	if ((*data)->exit != 1)
+		return (0);
 	return (1);
 }
 
@@ -206,8 +114,6 @@ int increment_components(char *targets, char pos, s_info **data)
 		{
 			if (targets[i] == 'P')
 				(*data)->player++;
-			else if (targets[i] == 'E')
-				(*data)->exit++;
 			else if (targets[i] == 'C')
 				(*data)->collect++;
 			return (0);
@@ -233,15 +139,71 @@ void flood_fill(s_info **data, int x, int y, char *target, char replace)
 	return;
 }
 
+
+void draw_map(s_info *game)
+{
+    int x, y;
+
+    for (y = 0; y < game->column; y++)
+    {
+        for (x = 0; x < game->row; x++)
+        {
+            if (game->map[y][x] == '1') // Wall
+                mlx_put_image_to_window(game->mlx, game->win, game->wall_img, x * WIDTH, y * HEIGHT);
+            else if (game->map[y][x] == '0') // Empty space
+                mlx_put_image_to_window(game->mlx, game->win, game->empty_img, x * WIDTH, y * HEIGHT);
+            else if (game->map[y][x] == 'P') // Player
+                mlx_put_image_to_window(game->mlx, game->win, game->player_img, x * WIDTH, y * HEIGHT);
+            else if (game->map[y][x] == 'C') // Collectible
+                mlx_put_image_to_window(game->mlx, game->win, game->collect_img, x * WIDTH, y * HEIGHT);
+            else if (game->map[y][x] == 'E') // Exit
+                mlx_put_image_to_window(game->mlx, game->win, game->exit_img, x * WIDTH, y * HEIGHT);
+        }
+    }
+}
+
 int main(int ac, char *av[])
 {
-	s_info *data;
-
+	int width = WIDTH;
+	int height = HEIGHT;
+    s_info *game;
 	if (ac == 2)
-	{
-		check_map_valid(av, &data);
-	}
-	else
-		ft_error("Try: executable & maps.ber 🚮");
-	return (0);
+		check_map_valid(av, &game);
+    game->mlx = mlx_init();
+	printf("Game structure initialized: %p\n", game);
+	printf("MLX initialized: %p\n", game->mlx);
+	printf("Map rows: %d, columns: %d\n", game->row, game->column);
+    if (!game->map)
+        return (1); // Error handling
+
+    game->win = mlx_new_window(game->mlx, game->row * WIDTH, game->column * HEIGHT, "So_long");
+	//game->img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &width, &width);
+	// mlx_put_image_to_window(game->mlx, game->win, game->img, game->player, game->player_y);
+    // Load images (assuming they exist as XPM files)
+
+	game->wall_img = mlx_xpm_file_to_image(game->mlx, "wall.xpm", &width, &height);
+	// mlx_put_image_to_window(game->mlx, game->win, game->wall_img, game->player, game->player_y);
+    //game->empty_img = mlx_xpm_file_to_image(game->mlx, "floor.xpm", &WIDTH, &HEIGHT);
+    //game->player_img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &WIDTH, &HEIGHT);
+    //game->collect_img = mlx_xpm_file_to_image(game->mlx, "collect.xpm", &WIDTH, &HEIGHT);
+    //game->exit_img = mlx_xpm_file_to_image(game->mlx, "exit.xpm", &WIDTH, &HEIGHT);
+
+    //draw_map(game);
+    mlx_loop(game->mlx);
+    return (0);
 }
+
+
+
+// int main(int ac, char *av[])
+// {
+// 	s_info *data;
+
+// 	if (ac == 2)
+// 	{
+// 		check_map_valid(av, &data);
+// 	}
+// 	else
+// 		ft_error("Try: executable & maps.ber 🚮");
+// 	return (0);
+// }
