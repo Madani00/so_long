@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/14 21:46:52 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/14 22:23:44 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void copy_map(s_info **data)
 
 void check_map_valid(char **av, s_info **data)
 {
-	// check_map_exetension(av[1]);
+	check_map_exetension(av[1]);
 	initiaze_struct(data);
 	get_mapsize(av, data);
 	check_map_walls(data);
@@ -93,6 +93,8 @@ int correct_components(s_info **data)
 				return (0);
 			if ((*data)->c_map[i][jj] == 'E')
 				(*data)->exit++;
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E')
+				return (0);
 			jj++;
 		}
 		i++;
@@ -108,9 +110,9 @@ int increment_components(char *targets, char pos, s_info **data)
 	int i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 3)
 	{
-		if (targets[i] == pos)
+		if (targets[i] == pos) // 0PC
 		{
 			if (targets[i] == 'P')
 				(*data)->player++;
@@ -201,18 +203,14 @@ int main(int ac, char *av[])
 	if (game->row * WIDTH > 1920 || game->column * HEIGHT > 1080)
 		return 1;
 	game->win = mlx_new_window(game->mlx, game->row * WIDTH, game->column * HEIGHT, "So_long");
-	// game->img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &width, &width);
-	//  mlx_put_image_to_window(game->mlx, game->win, game->img, game->player, game->player_y);
-	//  Load images (assuming they exist as XPM files)
-
 	game->wall_img = mlx_xpm_file_to_image(game->mlx, "./imgs/wall1.xpm", &width, &height);
 	game->wall_img1 = mlx_xpm_file_to_image(game->mlx, "./imgs/wall2.xpm", &width, &height);
-	game->empty_img = mlx_xpm_file_to_image(game->mlx, "./imgs/grey.xpm", &width, &height);
+	// game->empty_img = mlx_xpm_file_to_image(game->mlx, "./imgs/grey.xpm", &width, &height);
 	game->player_img = mlx_xpm_file_to_image(game->mlx, "./imgs/player.xpm", &width, &height);
 	game->collect_img = mlx_xpm_file_to_image(game->mlx, "./imgs/coll.xpm", &width, &height);
 	game->exit_img = mlx_xpm_file_to_image(game->mlx, "./imgs/door.xpm", &width, &height);
 
-	mlx_key_hook(game->win, handle_key, game);
+	// mlx_key_hook(game->win, handle_key, game);
 
 	draw_wall(game);
 	draw_player_collect(game);
