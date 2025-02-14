@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/12 12:18:08 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/13 21:41:45 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void copy_map(s_info **data)
 
 void check_map_valid(char **av, s_info **data)
 {
-	//check_map_exetension(av[1]);
+	// check_map_exetension(av[1]);
 	initiaze_struct(data);
 	get_mapsize(av, data);
 	check_map_walls(data);
@@ -139,61 +139,73 @@ void flood_fill(s_info **data, int x, int y, char *target, char replace)
 	return;
 }
 
-
-void draw_map(s_info *game)
+void draw_player_collect(s_info *game)
 {
-    int x, y;
+	int i;
+	int k;
 
-    for (y = 0; y < game->column; y++)
-    {
-        for (x = 0; x < game->row; x++)
-        {
-            if (game->map[y][x] == '1') // Wall
-                mlx_put_image_to_window(game->mlx, game->win, game->wall_img, x * WIDTH, y * HEIGHT);
-            else if (game->map[y][x] == '0') // Empty space
-                mlx_put_image_to_window(game->mlx, game->win, game->empty_img, x * WIDTH, y * HEIGHT);
-            else if (game->map[y][x] == 'P') // Player
-                mlx_put_image_to_window(game->mlx, game->win, game->player_img, x * WIDTH, y * HEIGHT);
-            else if (game->map[y][x] == 'C') // Collectible
-                mlx_put_image_to_window(game->mlx, game->win, game->collect_img, x * WIDTH, y * HEIGHT);
-            else if (game->map[y][x] == 'E') // Exit
-                mlx_put_image_to_window(game->mlx, game->win, game->exit_img, x * WIDTH, y * HEIGHT);
-        }
-    }
+	k = 0;
+	while (k < game->column)
+	{
+		i = 0;
+		while (i < game->row)
+		{
+            if (game->map[k][i] == '0')
+                mlx_put_image_to_window(game->mlx, game->win, game->empty_img, i * WIDTH, k * HEIGHT);
+            else if (game->map[k][i] == 'P')
+                mlx_put_image_to_window(game->mlx, game->win, game->player_img, i * WIDTH, k * HEIGHT);
+            else if (game->map[k][i] == 'C')
+			{
+				int i = 0;
+				while (i < 15)
+				{
+					mlx_put_image_to_window(game->mlx, game->win, game->collect_img, i * WIDTH, k * HEIGHT);
+					mlx_put_image_to_window(game->mlx, game->win, game->empty_img, i * WIDTH, k * HEIGHT);
+					mlx_put_image_to_window(game->mlx, game->win, game->collect_img, i * WIDTH, k * HEIGHT);
+					i++;
+				}
+			}
+
+            // else if (game->map[k][i] == 'E')
+            //     mlx_put_image_to_window(game->mlx, game->win, game->exit_img, i * WIDTH, k * HEIGHT);
+			i++;
+		}
+		k++;
+	}
 }
 
 int main(int ac, char *av[])
 {
 	int width = WIDTH;
 	int height = HEIGHT;
-    s_info *game;
+	s_info *game;
 	if (ac == 2)
 		check_map_valid(av, &game);
-    game->mlx = mlx_init();
-	printf("Game structure initialized: %p\n", game);
-	printf("MLX initialized: %p\n", game->mlx);
-	printf("Map rows: %d, columns: %d\n", game->row, game->column);
-    if (!game->map)
-        return (1); // Error handling
+	game->mlx = mlx_init();
 
-    game->win = mlx_new_window(game->mlx, game->row * WIDTH, game->column * HEIGHT, "So_long");
-	//game->img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &width, &width);
-	// mlx_put_image_to_window(game->mlx, game->win, game->img, game->player, game->player_y);
-    // Load images (assuming they exist as XPM files)
+	if (game->row * WIDTH > 1920 || game->column * HEIGHT > 1080)
+		return 1;
+	game->win = mlx_new_window(game->mlx, game->row * WIDTH, game->column * HEIGHT, "So_long");
+	// game->img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &width, &width);
+	//  mlx_put_image_to_window(game->mlx, game->win, game->img, game->player, game->player_y);
+	//  Load images (assuming they exist as XPM files)
 
-	game->wall_img = mlx_xpm_file_to_image(game->mlx, "wall.xpm", &width, &height);
-	// mlx_put_image_to_window(game->mlx, game->win, game->wall_img, game->player, game->player_y);
-    //game->empty_img = mlx_xpm_file_to_image(game->mlx, "floor.xpm", &WIDTH, &HEIGHT);
-    //game->player_img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &WIDTH, &HEIGHT);
-    //game->collect_img = mlx_xpm_file_to_image(game->mlx, "collect.xpm", &WIDTH, &HEIGHT);
-    //game->exit_img = mlx_xpm_file_to_image(game->mlx, "exit.xpm", &WIDTH, &HEIGHT);
+	game->wall_img = mlx_xpm_file_to_image(game->mlx, "wall1.xpm", &width, &height);
+	game->wall_img1 = mlx_xpm_file_to_image(game->mlx, "wall3.xpm", &width, &height);
+	game->empty_img = mlx_xpm_file_to_image(game->mlx, "grey.xpm", &width, &height);
+	game->player_img = mlx_xpm_file_to_image(game->mlx, "player.xpm", &width, &height);
+	game->collect_img = mlx_xpm_file_to_image(game->mlx, "coll4.xpm", &width, &height);
+	//game->exit_img = mlx_xpm_file_to_image(game->mlx, "exit.xpm", &WIDTH, &HEIGHT);
 
-    //draw_map(game);
-    mlx_loop(game->mlx);
-    return (0);
+	draw_wall(game);
+	draw_player_collect(game);
+	mlx_loop(game->mlx);
+
+	mlx_destroy_window(game->mlx, game->win);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	return (0);
 }
-
-
 
 // int main(int ac, char *av[])
 // {

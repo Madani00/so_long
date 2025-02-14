@@ -10,5 +10,5 @@ It provides additional features for X11, like handling images and special window
 
 ## links and beneficial
 
-- ai that removes the background
-https://www.experte.com/background-remover
+- canve webs to removes the background
+https://www.remove.bg/
