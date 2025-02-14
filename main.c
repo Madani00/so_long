@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/14 21:45:00 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:46:52 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ int main(int ac, char *av[])
 	game->collect_img = mlx_xpm_file_to_image(game->mlx, "./imgs/coll.xpm", &width, &height);
 	game->exit_img = mlx_xpm_file_to_image(game->mlx, "./imgs/door.xpm", &width, &height);
 
-	//mlx_key_hook(game->win, handle_key, game);
+	mlx_key_hook(game->win, handle_key, game);
 
 	draw_wall(game);
 	draw_player_collect(game);
