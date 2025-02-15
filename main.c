@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 15:54:17 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:17:10 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,29 @@ void draw_player_collect(s_info *data)
 	}
 }
 
+void print_moves(s_info *data, int previous_x, int previous_y)
+{
+	char *nmb;
+	nmb = ft_itoa(data->moves);
+	if (data->player_x != previous_x && data->player_y == previous_y)
+	{
+		write(1, "moves : ", 8);
+		write(1, nmb, ft_strlen(nmb));
+		write(1, "\n", 1);
+		data->moves++;
+	}
+	else if (data->player_x == previous_x && data->player_y != previous_y)
+	{
+		write(1, "moves : ", 8);
+		write(1, nmb, ft_strlen(nmb));
+		write(1, "\n", 1);
+		data->moves++;
+	}
+}
+
 void change_pos_collect(s_info *data, int keycode)
 {
+
 	int previous_x;
 	int previous_y;
 
@@ -184,6 +205,9 @@ void change_pos_collect(s_info *data, int keycode)
 		data->player_x--;
 	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
 		data->player_x++;
+	print_moves(data, previous_x, previous_y);
+	// printf("moves : %d", data->moves);
+	//data->moves++;
 	if (data->map[previous_x][previous_y] != '0') // E
 	{
 		if (data->map[previous_x][previous_y] == 'C')
@@ -192,6 +216,7 @@ void change_pos_collect(s_info *data, int keycode)
 			mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 		data->map[previous_x][previous_y] = '0';
 	}
+
 }
 
 int handle_key(int keycode, s_info *data)
@@ -246,11 +271,11 @@ int main(int ac, char *av[])
 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
 
 	mlx_key_hook(data->win, handle_key, data);
-
 	draw_wall(data);
 	draw_player_collect(data);
-	if (data->collect == 0)
-		mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+	// if (data->collect == 0)
+	// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+
 	mlx_loop(data->mlx);
 
 	mlx_destroy_window(data->mlx, data->win);
