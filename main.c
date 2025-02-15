@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 11:06:03 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/15 15:54:17 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,8 @@ void draw_player_collect(s_info *data)
 	int i;
 	int k;
 
+	if (data->map[data->player_x][data->player_y] == 'P')
+		mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 	k = 0;
 	while (k < data->column)
 	{
@@ -154,27 +156,48 @@ void draw_player_collect(s_info *data)
 		{
 			// if (data->map[k][i] == '0')
 			//     mlx_put_image_to_window(data->mlx, data->win, data->empty_img, i * WIDTH, k * HEIGHT);
-			if (data->map[k][i] == 'P')
-				mlx_put_image_to_window(data->mlx, data->win, data->player_img, i * WIDTH, k * HEIGHT);
+			// if (data->map[k][i] == 'P')
+			// 	mlx_put_image_to_window(data->mlx, data->win, data->player_img, i * WIDTH, k * HEIGHT);
 			if (data->map[k][i] == 'C')
 				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * WIDTH, k * HEIGHT);
-			if (data->map[k][i] == 'E')
-				mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
+			// if (data->map[k][i] == 'E')
+			// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
+
 			i++;
 		}
 		k++;
 	}
 }
 
-int handle_key(int keycode, s_info *data)
+void change_pos_collect(s_info *data, int keycode)
 {
 	int previous_x;
 	int previous_y;
 
-	if (!data)
-		return (1);
 	previous_x = data->player_x;
 	previous_y = data->player_y;
+	if (keycode == LEFT && data->map[data->player_x][data->player_y - 1] != '1')
+		data->player_y--;
+	if (keycode == RIGHT && data->map[data->player_x][data->player_y + 1] != '1')
+		data->player_y++;
+	if (keycode == UP && data->map[data->player_x - 1][data->player_y] != '1')
+		data->player_x--;
+	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
+		data->player_x++;
+	if (data->map[previous_x][previous_y] != '0') // E
+	{
+		if (data->map[previous_x][previous_y] == 'C')
+			data->collect--;
+		if (data->collect == 0)
+			mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+		data->map[previous_x][previous_y] = '0';
+	}
+}
+
+int handle_key(int keycode, s_info *data)
+{
+	if (!data)
+		return (1);
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(data->mlx, data->win);
@@ -184,21 +207,21 @@ int handle_key(int keycode, s_info *data)
 		free(data);
 		exit(0);
 	}
-	if (keycode == LEFT && data->map[data->player_x][data->player_y - 1] != '1')
-		data->player_y--;
-	if (keycode == RIGHT && data->map[data->player_x][data->player_y + 1] != '1')
-		data->player_y++;
-	if (keycode == UP && data->map[data->player_x - 1][data->player_y] != '1')
-		data->player_x--;
-	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
-		data->player_x++;
-	if (data->map[previous_x][previous_y] != '0')
-		data->map[previous_x][previous_y] = '0';
-
+	change_pos_collect(data, keycode);
+	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
+	{
+		printf("You won!\n");
+		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		free_map(&data);
+		free(data);
+		exit(0);
+	}
 	mlx_clear_window(data->mlx, data->win);
 	draw_wall(data);
 	draw_player_collect(data);
-	//mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 
 	return (0);
 }
@@ -226,6 +249,8 @@ int main(int ac, char *av[])
 
 	draw_wall(data);
 	draw_player_collect(data);
+	if (data->collect == 0)
+		mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 	mlx_loop(data->mlx);
 
 	mlx_destroy_window(data->mlx, data->win);
