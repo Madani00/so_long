@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/14 22:23:44 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/15 11:06:03 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,52 +141,64 @@ void flood_fill(s_info **data, int x, int y, char *target, char replace)
 	return;
 }
 
-void draw_player_collect(s_info *game)
+void draw_player_collect(s_info *data)
 {
 	int i;
 	int k;
 
 	k = 0;
-	while (k < game->column)
+	while (k < data->column)
 	{
 		i = 0;
-		while (i < game->row)
+		while (i < data->row)
 		{
-			// if (game->map[k][i] == '0')
-			//     mlx_put_image_to_window(game->mlx, game->win, game->empty_img, i * WIDTH, k * HEIGHT);
-			if (game->map[k][i] == 'P')
-				mlx_put_image_to_window(game->mlx, game->win, game->player_img, i * WIDTH, k * HEIGHT);
-			if (game->map[k][i] == 'C')
-				mlx_put_image_to_window(game->mlx, game->win, game->collect_img, i * WIDTH, k * HEIGHT);
-			if (game->map[k][i] == 'E')
-				mlx_put_image_to_window(game->mlx, game->win, game->exit_img, i * WIDTH, k * HEIGHT);
+			// if (data->map[k][i] == '0')
+			//     mlx_put_image_to_window(data->mlx, data->win, data->empty_img, i * WIDTH, k * HEIGHT);
+			if (data->map[k][i] == 'P')
+				mlx_put_image_to_window(data->mlx, data->win, data->player_img, i * WIDTH, k * HEIGHT);
+			if (data->map[k][i] == 'C')
+				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * WIDTH, k * HEIGHT);
+			if (data->map[k][i] == 'E')
+				mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
 			i++;
 		}
 		k++;
 	}
 }
 
-int handle_key(int keycode, s_info *game)
+int handle_key(int keycode, s_info *data)
 {
-	if (!game)
-		return (1);
+	int previous_x;
+	int previous_y;
 
+	if (!data)
+		return (1);
+	previous_x = data->player_x;
+	previous_y = data->player_y;
 	if (keycode == ESC)
 	{
-		mlx_destroy_window(game->mlx, game->win);
-		return (0);
+		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		free_map(&data);
+		free(data);
+		exit(0);
 	}
-	if (keycode == LEFT && game->map[game->player_x][game->player_y - 1] != '1')
-		game->player_y -= 1;
-	if (keycode == RIGHT && game->map[game->player_x][game->player_y + 1] != '1')
-		game->player_y += 1;
-	if (keycode == UP && game->map[game->player_x - 1][game->player_y] != '1')
-		game->player_x -= 1;
-	if (keycode == DOWN && game->map[game->player_x + 1][game->player_y] != '1')
-		game->player_x += 1;
+	if (keycode == LEFT && data->map[data->player_x][data->player_y - 1] != '1')
+		data->player_y--;
+	if (keycode == RIGHT && data->map[data->player_x][data->player_y + 1] != '1')
+		data->player_y++;
+	if (keycode == UP && data->map[data->player_x - 1][data->player_y] != '1')
+		data->player_x--;
+	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
+		data->player_x++;
+	if (data->map[previous_x][previous_y] != '0')
+		data->map[previous_x][previous_y] = '0';
 
-	mlx_clear_window(game->mlx, game->win);
-	mlx_put_image_to_window(game->mlx, game->win, game->player_img, game->player_y * WIDTH, game->player_x * HEIGHT);
+	mlx_clear_window(data->mlx, data->win);
+	draw_wall(data);
+	draw_player_collect(data);
+	//mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 
 	return (0);
 }
@@ -195,30 +207,32 @@ int main(int ac, char *av[])
 {
 	int width = WIDTH;
 	int height = HEIGHT;
-	s_info *game;
+	s_info *data;
 	if (ac == 2)
-		check_map_valid(av, &game);
-	game->mlx = mlx_init();
+		check_map_valid(av, &data);
+	data->mlx = mlx_init();
 
-	if (game->row * WIDTH > 1920 || game->column * HEIGHT > 1080)
+	if (data->row * WIDTH > 1920 || data->column * HEIGHT > 1080)
 		return 1;
-	game->win = mlx_new_window(game->mlx, game->row * WIDTH, game->column * HEIGHT, "So_long");
-	game->wall_img = mlx_xpm_file_to_image(game->mlx, "./imgs/wall1.xpm", &width, &height);
-	game->wall_img1 = mlx_xpm_file_to_image(game->mlx, "./imgs/wall2.xpm", &width, &height);
-	// game->empty_img = mlx_xpm_file_to_image(game->mlx, "./imgs/grey.xpm", &width, &height);
-	game->player_img = mlx_xpm_file_to_image(game->mlx, "./imgs/player.xpm", &width, &height);
-	game->collect_img = mlx_xpm_file_to_image(game->mlx, "./imgs/coll.xpm", &width, &height);
-	game->exit_img = mlx_xpm_file_to_image(game->mlx, "./imgs/door.xpm", &width, &height);
+	data->win = mlx_new_window(data->mlx, data->row * WIDTH, data->column * HEIGHT, "So_long");
+	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./imgs/wall1.xpm", &width, &height);
+	data->wall_img1 = mlx_xpm_file_to_image(data->mlx, "./imgs/wall2.xpm", &width, &height);
+	// data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/grey.xpm", &width, &height);
+	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/player.xpm", &width, &height);
+	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &width, &height);
+	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
 
-	// mlx_key_hook(game->win, handle_key, game);
+	mlx_key_hook(data->win, handle_key, data);
 
-	draw_wall(game);
-	draw_player_collect(game);
-	mlx_loop(game->mlx);
+	draw_wall(data);
+	draw_player_collect(data);
+	mlx_loop(data->mlx);
 
-	mlx_destroy_window(game->mlx, game->win);
-	mlx_destroy_display(game->mlx);
-	free(game->mlx);
+	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
+	free_map(&data);
+	free(data);
 	return (0);
 }
 
