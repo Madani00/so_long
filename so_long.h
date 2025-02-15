@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 16:18:07 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:53:51 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ typedef struct map
 	void *collect_img;
 	void *exit_img;
 	int moves;
+	int exit_show;
+	int door_x;
+	int door_y;
 } s_info;
 
 #define ESC 65307

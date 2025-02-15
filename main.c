@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 17:17:10 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/15 20:47:19 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void check_map_walls(s_info **data)
 		get_player_position(data, (*data)->map[i], i);
 		i++;
 	}
-	printf("x : %d\n", (*data)->player_x);
-	printf("y : %d\n", (*data)->player_y);
 }
 
 void asly(s_info **data)
@@ -63,16 +61,12 @@ void check_map_valid(char **av, s_info **data)
 	get_mapsize(av, data);
 	check_map_walls(data);
 	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PC", 'x');
-	printf("-----copy-------\n");
-	copy_map(data);
-	printf("-----asly -------\n");
-	asly(data);
-	printf("PLAYER : %d\n", (*data)->player);
-	printf("COLLECT : %d\n", (*data)->collect);
+	// copy_map(data);
+	// asly(data);
 	if (!correct_components(data))
 	{
 		free_map(data);
-		free_error((*data), "Oops! Number of map's components INVALID 😓");
+		free_error((*data), "Oops! Number haha of map's components INVALID 😓");
 	}
 }
 
@@ -99,7 +93,6 @@ int correct_components(s_info **data)
 		}
 		i++;
 	}
-	printf("EXIT : %d\n", (*data)->exit);
 	if ((*data)->exit != 1)
 		return (0);
 	return (1);
@@ -154,15 +147,15 @@ void draw_player_collect(s_info *data)
 		i = 0;
 		while (i < data->row)
 		{
-			// if (data->map[k][i] == '0')
-			//     mlx_put_image_to_window(data->mlx, data->win, data->empty_img, i * WIDTH, k * HEIGHT);
-			// if (data->map[k][i] == 'P')
-			// 	mlx_put_image_to_window(data->mlx, data->win, data->player_img, i * WIDTH, k * HEIGHT);
 			if (data->map[k][i] == 'C')
 				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * WIDTH, k * HEIGHT);
+			if (data->map[k][i] == 'E' && data->exit_show)
+				mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
 			// if (data->map[k][i] == 'E')
-			// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
-
+			// {
+			// 	data->door_x = k;
+			// 	data->door_y = i;
+			// }
 			i++;
 		}
 		k++;
@@ -178,6 +171,7 @@ void print_moves(s_info *data, int previous_x, int previous_y)
 		write(1, "moves : ", 8);
 		write(1, nmb, ft_strlen(nmb));
 		write(1, "\n", 1);
+		free(nmb);
 		data->moves++;
 	}
 	else if (data->player_x == previous_x && data->player_y != previous_y)
@@ -185,6 +179,7 @@ void print_moves(s_info *data, int previous_x, int previous_y)
 		write(1, "moves : ", 8);
 		write(1, nmb, ft_strlen(nmb));
 		write(1, "\n", 1);
+		free(nmb);
 		data->moves++;
 	}
 }
@@ -205,18 +200,15 @@ void change_pos_collect(s_info *data, int keycode)
 		data->player_x--;
 	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
 		data->player_x++;
+	if (data->collect == 0)
+		data->exit_show = 1;
 	print_moves(data, previous_x, previous_y);
-	// printf("moves : %d", data->moves);
-	//data->moves++;
-	if (data->map[previous_x][previous_y] != '0') // E
+	if (data->map[previous_x][previous_y] != '0')
 	{
 		if (data->map[previous_x][previous_y] == 'C')
 			data->collect--;
-		if (data->collect == 0)
-			mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 		data->map[previous_x][previous_y] = '0';
 	}
-
 }
 
 int handle_key(int keycode, s_info *data)
@@ -233,6 +225,10 @@ int handle_key(int keycode, s_info *data)
 		exit(0);
 	}
 	change_pos_collect(data, keycode);
+	// if (data->collect == 0)
+	// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->door_y * WIDTH, data->door_x * HEIGHT);
+	// if (data->collect == 0)
+	// 		data->exit_show = 1;
 	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
 	{
 		printf("You won!\n");
@@ -250,6 +246,13 @@ int handle_key(int keycode, s_info *data)
 
 	return (0);
 }
+
+// int loop_init(s_info *game)
+// {
+// 	if (game->exit_show)
+// 		mlx_put_image_to_window(game->mlx, game->win, game->exit_img, game->door_y * WIDTH, game->door_x * HEIGHT);
+// 	return (0);
+// }
 
 int main(int ac, char *av[])
 {
@@ -269,15 +272,21 @@ int main(int ac, char *av[])
 	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/player.xpm", &width, &height);
 	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &width, &height);
 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
-
 	mlx_key_hook(data->win, handle_key, data);
 	draw_wall(data);
 	draw_player_collect(data);
 	// if (data->collect == 0)
+	// {
+	// 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
 	// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 
-	mlx_loop(data->mlx);
+	// }
 
+	/*---------------------------------*/
+	// mlx_loop_hook(data->mlx, loop_init, data);
+	/*---------------------------------*/
+
+	mlx_loop(data->mlx);
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
