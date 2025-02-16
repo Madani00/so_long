@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 20:47:19 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:17:28 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int correct_components(s_info **data)
 				return (0);
 			if ((*data)->c_map[i][jj] == 'E')
 				(*data)->exit++;
-			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E')
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1')
 				return (0);
 			jj++;
 		}
@@ -193,13 +193,25 @@ void change_pos_collect(s_info *data, int keycode)
 	previous_x = data->player_x;
 	previous_y = data->player_y;
 	if (keycode == LEFT && data->map[data->player_x][data->player_y - 1] != '1')
+	{
+		data->direction = 1;
 		data->player_y--;
+	}
 	if (keycode == RIGHT && data->map[data->player_x][data->player_y + 1] != '1')
+	{
+		data->direction = 2;
 		data->player_y++;
+	}
 	if (keycode == UP && data->map[data->player_x - 1][data->player_y] != '1')
+	{
+		data->direction = 3;
 		data->player_x--;
+	}
 	if (keycode == DOWN && data->map[data->player_x + 1][data->player_y] != '1')
+	{
+		data->direction = 0;
 		data->player_x++;
+	}
 	if (data->collect == 0)
 		data->exit_show = 1;
 	print_moves(data, previous_x, previous_y);

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 18:53:51 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/16 13:00:44 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct map
 	int exit_show;
 	int door_x;
 	int door_y;
+	int direction;
 } s_info;
 
 #define ESC 65307
