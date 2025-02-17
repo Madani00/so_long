@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/16 13:00:44 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/17 11:48:43 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ typedef struct map
 #define RIGHT 65363
 #define UP 65362
 #define DOWN 65364
+
+#define A 97
+#define D 100
+#define W 119
+#define S 115
 
 char *get_next_line(int fd);
 char *allocation(int fd);
