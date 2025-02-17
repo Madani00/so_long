@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/17 11:48:43 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:15:40 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct map
 	int door_x;
 	int door_y;
 	int direction;
+	void *player_right[4];
+	int previous_x;
+	int previous_y;	
 } s_info;
 
 #define ESC 65307

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/17 11:56:28 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:22:57 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,15 +186,13 @@ void print_moves(s_info *data, int previous_x, int previous_y)
 
 void change_pos_collect(s_info *data, int keycode)
 {
-// #define A 97
-// #define D 100
-// #define W 119
-// #define S 115
 	int previous_x;
 	int previous_y;
 
 	previous_x = data->player_x;
 	previous_y = data->player_y;
+	data->previous_x = data->player_x;
+	data->previous_y = data->player_y;
 	if ((keycode == LEFT || keycode == A)&& data->map[data->player_x][data->player_y - 1] != '1')
 	{
 		data->direction = 3;
@@ -222,7 +220,7 @@ void change_pos_collect(s_info *data, int keycode)
 	{
 		if (data->map[previous_x][previous_y] == 'C')
 			data->collect--;
-		data->map[previous_x][previous_y] = '0';
+		//data->map[previous_x][previous_y] = '0';
 	}
 }
 
@@ -254,9 +252,10 @@ int handle_key(int keycode, s_info *data)
 		free(data);
 		exit(0);
 	}
-	mlx_clear_window(data->mlx, data->win);
-	draw_wall(data);
-	draw_player_collect(data);
+	//mlx_clear_window(data->mlx, data->win);
+	//draw_wall(data);
+	//draw_player_collect(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->empty_img , data->previous_y * WIDTH, data->previous_x * HEIGHT);
 	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 
 	return (0);
@@ -283,8 +282,8 @@ int main(int ac, char *av[])
 	data->win = mlx_new_window(data->mlx, data->row * WIDTH, data->column * HEIGHT, "So_long");
 	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./imgs/wall1.xpm", &width, &height);
 	data->wall_img1 = mlx_xpm_file_to_image(data->mlx, "./imgs/wall2.xpm", &width, &height);
-	// data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/grey.xpm", &width, &height);
-	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/down/3.xpm", &width, &height);
+	data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/grey.xpm", &width, &height);
+	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/right/0.xpm", &width, &height);
 	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &width, &height);
 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
 	mlx_key_hook(data->win, handle_key, data);
