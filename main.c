@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/17 14:22:57 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/18 10:20:00 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void check_map_valid(char **av, s_info **data)
 	if (!correct_components(data))
 	{
 		free_map(data);
-		free_error((*data), "Oops! Number haha of map's components INVALID 😓");
+		free_error((*data), "Oops! Number of map's components INVALID 😓");
 	}
 }
 
@@ -87,7 +87,7 @@ int correct_components(s_info **data)
 				return (0);
 			if ((*data)->c_map[i][jj] == 'E')
 				(*data)->exit++;
-			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1')
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0')
 				return (0);
 			jj++;
 		}
@@ -139,8 +139,7 @@ void draw_player_collect(s_info *data)
 	int i;
 	int k;
 
-	if (data->map[data->player_x][data->player_y] == 'P')
-		mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
 	k = 0;
 	while (k < data->column)
 	{
@@ -193,17 +192,17 @@ void change_pos_collect(s_info *data, int keycode)
 	previous_y = data->player_y;
 	data->previous_x = data->player_x;
 	data->previous_y = data->player_y;
-	if ((keycode == LEFT || keycode == A)&& data->map[data->player_x][data->player_y - 1] != '1')
+	if ((keycode == LEFT || keycode == A) && data->map[data->player_x][data->player_y - 1] != '1')
 	{
 		data->direction = 3;
 		data->player_y--;
 	}
-	if ((keycode == RIGHT ||keycode == D)&& data->map[data->player_x][data->player_y + 1] != '1')
+	if ((keycode == RIGHT ||keycode == D) && data->map[data->player_x][data->player_y + 1] != '1')
 	{
 		data->direction = 2;
 		data->player_y++;
 	}
-	if ((keycode == UP || keycode == W)&& data->map[data->player_x - 1][data->player_y] != '1')
+	if ((keycode == UP || keycode == W) && data->map[data->player_x - 1][data->player_y] != '1')
 	{
 		data->direction = 1;
 		data->player_x--;
@@ -226,8 +225,8 @@ void change_pos_collect(s_info *data, int keycode)
 
 int handle_key(int keycode, s_info *data)
 {
-	if (!data)
-		return (1);
+	// if (!data)
+	// 	return (1);
 	if (keycode == ESC)
 	{
 		mlx_destroy_window(data->mlx, data->win);
@@ -282,7 +281,7 @@ int main(int ac, char *av[])
 	data->win = mlx_new_window(data->mlx, data->row * WIDTH, data->column * HEIGHT, "So_long");
 	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./imgs/wall1.xpm", &width, &height);
 	data->wall_img1 = mlx_xpm_file_to_image(data->mlx, "./imgs/wall2.xpm", &width, &height);
-	data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/grey.xpm", &width, &height);
+	data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/black.xpm", &width, &height);
 	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/right/0.xpm", &width, &height);
 	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &width, &height);
 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
