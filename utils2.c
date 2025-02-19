@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:46:12 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/13 18:46:45 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:51:47 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ void draw_wall_helper(s_info *game, int *k, int *i)
 	while (*i < game->row && *k % 2 == 0)
 	{
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * WIDTH, *k * HEIGHT);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * WIDTH, *k * HEIGHT);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * game->width, *k * game->height);
 		(*i)++;
 	}
 	while (*i < game->row && *k % 2 != 0)
 	{
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * WIDTH, *k * HEIGHT);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * WIDTH, *k * HEIGHT);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * game->width, *k * game->height);
 		(*i)++;
 	}
 }

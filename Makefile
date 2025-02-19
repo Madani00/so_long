@@ -1,4 +1,4 @@
-NAME = long
+NAME = so_long
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 RM = rm -f

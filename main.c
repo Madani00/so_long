@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/18 10:20:00 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 10:11:22 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,22 +139,29 @@ void draw_player_collect(s_info *data)
 	int i;
 	int k;
 
-	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * data->width, data->player_x * data->height);
 	k = 0;
 	while (k < data->column)
 	{
 		i = 0;
 		while (i < data->row)
 		{
-			if (data->map[k][i] == 'C')
-				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * WIDTH, k * HEIGHT);
-			if (data->map[k][i] == 'E' && data->exit_show)
-				mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * WIDTH, k * HEIGHT);
-			// if (data->map[k][i] == 'E')
+			// if (data->map[k][i] == 'C')
 			// {
-			// 	data->door_x = k;
-			// 	data->door_y = i;
+			// 	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+			// 	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+			// 	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+			// 	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+			// 	mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], i * data->width, k * data->height);
+			// 	data->frame = (data->frame + 1) % 4;
 			// }
+			// if (data->map[k][i] == 'E' && data->exit_show)
+			// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, i * data->width, k * data->height);
+			if (data->map[k][i] == 'E')
+			{
+				data->door_x = k;
+				data->door_y = i;
+			}
 			i++;
 		}
 		k++;
@@ -197,7 +204,7 @@ void change_pos_collect(s_info *data, int keycode)
 		data->direction = 3;
 		data->player_y--;
 	}
-	if ((keycode == RIGHT ||keycode == D) && data->map[data->player_x][data->player_y + 1] != '1')
+	if ((keycode == RIGHT || keycode == D) && data->map[data->player_x][data->player_y + 1] != '1')
 	{
 		data->direction = 2;
 		data->player_y++;
@@ -207,20 +214,75 @@ void change_pos_collect(s_info *data, int keycode)
 		data->direction = 1;
 		data->player_x--;
 	}
-	if ((keycode == DOWN|| keycode == S) && data->map[data->player_x + 1][data->player_y] != '1')
+	if ((keycode == DOWN || keycode == S) && data->map[data->player_x + 1][data->player_y] != '1')
 	{
 		data->direction = 0;
 		data->player_x++;
 	}
-	if (data->collect == 0)
-		data->exit_show = 1;
 	print_moves(data, previous_x, previous_y);
-	if (data->map[previous_x][previous_y] != '0')
-	{
-		if (data->map[previous_x][previous_y] == 'C')
-			data->collect--;
-		//data->map[previous_x][previous_y] = '0';
-	}
+	// if (data->map[previous_x][previous_y] != '0')
+	// {
+	if (data->map[previous_x][previous_y] == 'C')
+		data->collect--;
+	if (data->collect == 1)
+		mlx_put_image_to_window(data->mlx, data->win, data->door_img, data->door_y * 60, data->door_x * 60);
+}
+
+// void direction_player_img(s_info *data)
+// {
+
+// 	if (data->animation == 4)
+// 		data->animation = 0;
+// 	data->animation += 1;
+// 	if (data->direction == 0)
+// 	{
+// 		// data->player_down[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/0.xpm", &data->width, &data->height);
+// 		// data->player_down[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/1.xpm", &data->width, &data->height);
+// 		// data->player_down[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/2.xpm", &data->width, &data->height);
+// 		// data->player_down[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/3.xpm", &data->width, &data->height);
+// 		mlx_put_image_to_window(data->mlx, data->win, data->player_down[data->animation], data->player_y * data->width, data->player_x * data->height);
+// 	}
+// 	else if (data->direction == 2)
+// 	{
+// 		// data->player_right[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/0.xpm", &data->width, &data->height);
+// 		// data->player_right[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/1.xpm", &data->width, &data->height);
+// 		// data->player_right[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/2.xpm", &data->width, &data->height);
+// 		// data->player_right[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/3.xpm", &data->width, &data->height);
+// 		mlx_put_image_to_window(data->mlx, data->win, data->player_right[data->animation], data->player_y * data->width, data->player_x * data->height);
+// 	}
+// 	else if (data->direction == 3)
+// 	{
+// 		// data->player_left[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/0.xpm", &data->width, &data->height);
+// 		// data->player_left[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/1.xpm", &data->width, &data->height);
+// 		// data->player_left[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/2.xpm", &data->width, &data->height);
+// 		// data->player_left[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/3.xpm", &data->width, &data->height);
+// 		mlx_put_image_to_window(data->mlx, data->win, data->player_left[data->animation], data->player_y * data->width, data->player_x * data->height);
+// 	}
+// 	else if (data->direction == 1)
+// 	{
+// 		// data->player_up[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/0.xpm", &data->width, &data->height);
+// 		// data->player_up[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/1.xpm", &data->width, &data->height);
+// 		// data->player_up[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/2.xpm", &data->width, &data->height);
+// 		// data->player_up[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/3.xpm", &data->width, &data->height);
+// 		mlx_put_image_to_window(data->mlx, data->win, data->player_up[data->animation], data->player_y * data->width, data->player_x * data->height);
+// 	}
+// }
+
+void moving_player(s_info *data, int keycode)
+{
+	data->animation += 1;
+	if (data->animation == 4)
+		data->animation = 0;
+
+	if (keycode == 'w')
+		mlx_put_image_to_window(data->mlx, data->win, data->player_up[data->animation], data->player_y * data->width, data->player_x * data->height);
+	else if (keycode == 'd')
+		mlx_put_image_to_window(data->mlx, data->win, data->player_right[data->animation], data->player_y * data->width, data->player_x * data->height);
+	else if (keycode == 'a')
+		mlx_put_image_to_window(data->mlx, data->win, data->player_left[data->animation], data->player_y * data->width, data->player_x * data->height);
+	else if (keycode == 's')
+		mlx_put_image_to_window(data->mlx, data->win, data->player_down[data->animation], data->player_y * data->width, data->player_x * data->height);
+
 }
 
 int handle_key(int keycode, s_info *data)
@@ -237,86 +299,114 @@ int handle_key(int keycode, s_info *data)
 		exit(0);
 	}
 	change_pos_collect(data, keycode);
-	// if (data->collect == 0)
-	// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->door_y * WIDTH, data->door_x * HEIGHT);
-	// if (data->collect == 0)
-	// 		data->exit_show = 1;
+	// if (data->exit_show)
+	// 	mlx_put_image_to_window(data->mlx, data->win, data->door_img , data->door_y * 60, data->door_x * 60);
 	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
 	{
 		printf("You won!\n");
-		mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_image(data->mlx, data->wall_img);
+		mlx_destroy_image(data->mlx, data->wall_img1);
+		mlx_destroy_image(data->mlx, data->empty_img);
+
+		mlx_destroy_image(data->mlx, data->player_img); // free 2
+		mlx_destroy_image(data->mlx, data->collect_img);
+		// if (data->player_img)
+		// mlx_destroy_image(data->mlx, data->player_img);
+		// mlx_destroy_window(data->mlx, data->exit_img);
 		mlx_destroy_display(data->mlx);
+
 		free(data->mlx);
 		free_map(&data);
 		free(data);
 		exit(0);
 	}
-	//mlx_clear_window(data->mlx, data->win);
-	//draw_wall(data);
-	//draw_player_collect(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->empty_img , data->previous_y * WIDTH, data->previous_x * HEIGHT);
-	mlx_put_image_to_window(data->mlx, data->win, data->player_img, data->player_y * WIDTH, data->player_x * HEIGHT);
-
+	mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->previous_y * 60, data->previous_x * 60);
+	moving_player(data, keycode);
+	// ---------------------------------
+	// ---------------------------------
 	return (0);
 }
 
-// int loop_init(s_info *game)
+void load_images(s_info *data)
+{
+	data->win = mlx_new_window(data->mlx, data->row * data->width, data->column * data->height, "So_long");
+	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./imgs/wall1.xpm", &data->width, &data->height);
+	data->wall_img1 = mlx_xpm_file_to_image(data->mlx, "./imgs/wall2.xpm", &data->width, &data->height);
+	data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/black.xpm", &data->width, &data->height);
+	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/down/0.xpm", &data->width, &data->height);
+	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+	data->door_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &data->width, &data->height);
+
+	data->player_down[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/0.xpm", &data->width, &data->height);
+	data->player_down[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/1.xpm", &data->width, &data->height);
+	data->player_down[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/2.xpm", &data->width, &data->height);
+	data->player_down[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/down/3.xpm", &data->width, &data->height);
+	data->player_right[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/0.xpm", &data->width, &data->height);
+	data->player_right[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/1.xpm", &data->width, &data->height);
+	data->player_right[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/2.xpm", &data->width, &data->height);
+	data->player_right[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/right/3.xpm", &data->width, &data->height);
+	data->player_left[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/0.xpm", &data->width, &data->height);
+	data->player_left[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/1.xpm", &data->width, &data->height);
+	data->player_left[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/2.xpm", &data->width, &data->height);
+	data->player_left[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/left/3.xpm", &data->width, &data->height);
+	data->player_up[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/0.xpm", &data->width, &data->height);
+	data->player_up[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/1.xpm", &data->width, &data->height);
+	data->player_up[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/2.xpm", &data->width, &data->height);
+	data->player_up[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/3.xpm", &data->width, &data->height);
+}
+
+// void coin_animation(s_info *data)
 // {
-// 	if (game->exit_show)
-// 		mlx_put_image_to_window(game->mlx, game->win, game->exit_img, game->door_y * WIDTH, game->door_x * HEIGHT);
-// 	return (0);
+// 	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+// 	// data->frame = (data->frame + 1) % 4;
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		if (!data->coins[i])
+// 		{
+// 			printf("Error: Failed to load coin image %d\n", i);
+// 			exit(1);
+// 		}
+// 	}
 // }
+
+int coin(void *param)
+{
+	s_info *data = (s_info *)param; // Cast void * to s_info *
+
+	// Put the current frame's coin image at the correct position
+	mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+
+	// Move to the next frame (loops between 0 and 3)
+	data->frame = (data->frame + 1) % 4;
+
+	return 0;
+}
 
 int main(int ac, char *av[])
 {
-	int width = WIDTH;
-	int height = HEIGHT;
 	s_info *data;
+
 	if (ac == 2)
+	{
 		check_map_valid(av, &data);
-	data->mlx = mlx_init();
+		data->mlx = mlx_init();
+		// ---------------------------
 
-	if (data->row * WIDTH > 1920 || data->column * HEIGHT > 1080)
-		return 1;
-	data->win = mlx_new_window(data->mlx, data->row * WIDTH, data->column * HEIGHT, "So_long");
-	data->wall_img = mlx_xpm_file_to_image(data->mlx, "./imgs/wall1.xpm", &width, &height);
-	data->wall_img1 = mlx_xpm_file_to_image(data->mlx, "./imgs/wall2.xpm", &width, &height);
-	data->empty_img = mlx_xpm_file_to_image(data->mlx, "./imgs/black.xpm", &width, &height);
-	data->player_img = mlx_xpm_file_to_image(data->mlx, "./imgs/right/0.xpm", &width, &height);
-	data->collect_img = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &width, &height);
-	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
-	mlx_key_hook(data->win, handle_key, data);
-	draw_wall(data);
-	draw_player_collect(data);
-	// if (data->collect == 0)
-	// {
-	// 	data->exit_img = mlx_xpm_file_to_image(data->mlx, "./imgs/door.xpm", &width, &height);
-	// 	mlx_put_image_to_window(data->mlx, data->win, data->exit_img, data->player_y * WIDTH, data->player_x * HEIGHT);
+		// ---------------------------
+		load_images(data);
+		mlx_key_hook(data->win, handle_key, data);
+		draw_wall(data);
+		draw_player_collect(data);
 
-	// }
-
-	/*---------------------------------*/
-	// mlx_loop_hook(data->mlx, loop_init, data);
-	/*---------------------------------*/
-
-	mlx_loop(data->mlx);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
-	free_map(&data);
-	free(data);
+		//coin_animation(data);
+		//mlx_loop_hook(data->mlx, coin, data);
+		mlx_loop(data->mlx);
+	}
+	else
+		ft_error("Try: executable & maps.ber 🚮");
 	return (0);
 }
-
-// int main(int ac, char *av[])
-// {
-// 	s_info *data;
-
-// 	if (ac == 2)
-// 	{
-// 		check_map_valid(av, &data);
-// 	}
-// 	else
-// 		ft_error("Try: executable & maps.ber 🚮");
-// 	return (0);
-// }

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/15 16:18:48 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 09:47:11 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void initiaze_struct(s_info **data)
 	(*data)->player = 0;
 	(*data)->exit = 0;
 	(*data)->moves = 0;
+	(*data)->animation = 0;
+	(*data)->width = 60;
+	(*data)->height = 60;
+	(*data)->frame = 0;
 }
 
 void get_mapsize(char **av, s_info **data)

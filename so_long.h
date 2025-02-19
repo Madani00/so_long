@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/17 14:15:40 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 09:57:25 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 #define BUFFER_SIZE 1
 
-#define WIDTH 60
-#define HEIGHT 60
 
 #include <mlx.h>
 #include "Libft/libft.h"
@@ -45,15 +43,22 @@ typedef struct map
 	void *empty_img;
 	void *player_img;
 	void *collect_img;
-	void *exit_img;
+	void *door_img;
 	int moves;
-	int exit_show;
 	int door_x;
 	int door_y;
 	int direction;
 	void *player_right[4];
+	void *player_left[4];
+	void *player_up[4];
+	void *player_down[4];
 	int previous_x;
-	int previous_y;	
+	int previous_y;
+	int animation;
+	int width;
+	int height;
+	void *coins[4];
+	int frame;
 } s_info;
 
 #define ESC 65307
