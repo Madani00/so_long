@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/19 12:11:34 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 21:13:39 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,19 @@ void flood_fill(s_info **data, int x, int y, char *target, char replace)
 	return;
 }
 
+int coin(void *param)
+{
+	s_info *data = (s_info *)param;
+
+	// Put the current frame's coin image at the correct position
+	mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+
+	// Move to the next frame (loops between 0 and 3)
+	data->frame = (data->frame + 1) % 4;
+
+	return 0;
+}
+
 void draw_player_collect(s_info *data)
 {
 	int i;
@@ -147,7 +160,10 @@ void draw_player_collect(s_info *data)
 		while (i < data->row)
 		{
 			if (data->map[k][i] == 'C')
-				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * data->width, k * data->height);
+			{
+				mlx_loop_hook(data->mlx, coin, data);
+			}
+				//mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * data->width, k * data->height);
 			if (data->map[k][i] == 'E')
 			{
 				data->door_x = k;
@@ -181,7 +197,7 @@ void print_moves(s_info *data, int previous_x, int previous_y)
 	}
 }
 
-int change_pos_collect(s_info *data, int keycode)
+void change_pos_collect(s_info *data, int keycode)
 {
 	int previous_x;
 	int previous_y;
@@ -211,13 +227,14 @@ int change_pos_collect(s_info *data, int keycode)
 		data->player_x++;
 	}
 	else
-		return (1);
+	{
+		data->direction = -1;
+	}
 	print_moves(data, previous_x, previous_y);
 	if (data->map[previous_x][previous_y] == 'C')
 		data->collect--;
 	if (data->collect == 1)
 		mlx_put_image_to_window(data->mlx, data->win, data->door_img, data->door_y * 60, data->door_x * 60);
-	return (0);
 }
 
 void moving_player(s_info *data, int keycode)
@@ -251,10 +268,10 @@ int handle_key(int keycode, s_info *data)
 		free(data);
 		exit(0);
 	}
-	if (change_pos_collect(data, keycode) == 1)
-		return (1);
+	change_pos_collect(data, keycode);
 	reach_door_exit(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->previous_y * 60, data->previous_x * 60);
+	if (data->direction != -1)
+		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->previous_y * 60, data->previous_x * 60);
 	moving_player(data, keycode);
 	return (0);
 }
@@ -287,36 +304,23 @@ void load_images(s_info *data)
 	data->player_up[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/3.xpm", &data->width, &data->height);
 }
 
-// void coin_animation(s_info *data)
-// {
-// 	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
-// 	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
-// 	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
-// 	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
-// 	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
-// 	// data->frame = (data->frame + 1) % 4;
-// 	for (int i = 0; i < 4; i++)
-// 	{
-// 		if (!data->coins[i])
-// 		{
-// 			printf("Error: Failed to load coin image %d\n", i);
-// 			exit(1);
-// 		}
-// 	}
-// }
-
-// int coin(void *param)
-// {
-// 	s_info *data = (s_info *)param; // Cast void * to s_info *
-
-// 	// Put the current frame's coin image at the correct position
-// 	mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
-
-// 	// Move to the next frame (loops between 0 and 3)
-// 	data->frame = (data->frame + 1) % 4;
-
-// 	return 0;
-// }
+void coin_animation(s_info *data)
+{
+	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+	// data->frame = (data->frame + 1) % 4;
+	for (int i = 0; i < 4; i++)
+	{
+		if (!data->coins[i])
+		{
+			printf("Error: Failed to load coin image %d\n", i);
+			exit(1);
+		}
+	}
+}
 
 int main(int ac, char *av[])
 {
@@ -329,10 +333,13 @@ int main(int ac, char *av[])
 		load_images(data);
 		// mlx_key_hook(data->win, handle_key, data);
 		draw_wall(data);
+		coin_animation(data);
 		draw_player_collect(data);
+
+
 		mlx_key_hook(data->win, handle_key, data);
-		//coin_animation(data);
-		//mlx_loop_hook(data->mlx, coin, data);
+
+		// mlx_loop_hook(data->mlx, coin, data);
 		mlx_loop(data->mlx);
 	}
 	else
