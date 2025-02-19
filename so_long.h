@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/19 09:57:25 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:10:40 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ typedef struct map
 } s_info;
 
 #define ESC 65307
-#define LEFT 65361
-#define RIGHT 65363
-#define UP 65362
-#define DOWN 65364
+// #define LEFT 65361
+// #define RIGHT 65363
+// #define UP 65362
+// #define DOWN 65364
 
 #define A 97
 #define D 100
@@ -84,8 +84,8 @@ void free_error(s_info *data, char *msg);
 void free_args(char **arg);
 void free_map(s_info **data);
 
-void copy_map(s_info **data); // sdfdf
-void asly(s_info **data);	  // kdf
+void copy_map(s_info **data); // sdfdfdfdfd
+void asly(s_info **data); // lkddlfkdlfkdfd
 
 void flood_fill(s_info **data, int x, int y, char *target, char replace);
 int correct_components(s_info **data);
@@ -96,5 +96,6 @@ int check_ones(char *str);
 void get_player_position(s_info **data, char *map_row, int index);
 void draw_wall(s_info *game);
 void draw_wall_helper(s_info *game, int *k, int *i);
+void reach_door_exit(s_info *data);
 
 #endif
