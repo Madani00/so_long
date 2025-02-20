@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/19 22:35:34 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:07:09 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,6 @@ void check_map_exetension(char *map_file);
 void free_error(s_info *data, char *msg);
 void free_args(char **arg);
 void free_map(s_info **data);
-
-void copy_map(s_info **data); // sdfdfdfdfd
-void asly(s_info **data); // lkddlfkdlfkdfd
-
 void flood_fill(s_info **data, int x, int y, char *target, char replace);
 int correct_components(s_info **data);
 void initiaze_struct(s_info **data);
@@ -93,5 +89,13 @@ void get_player_position(s_info **data, char *map_row, int index);
 void draw_wall(s_info *game);
 void draw_wall_helper(s_info *game, int *k, int *i);
 void reach_door_exit(s_info *data);
+void free_images(s_info *data);
+void free_minilbx(s_info *data);
+void check_map_walls(s_info **data);
+void load_images(s_info *data);
+void check_map_valid(char **av, s_info **data);
+int increment_components(char *targets, char pos, s_info **data);
+void print_moves(s_info *data, int previous_x, int previous_y);
+void press_keys(s_info *data, int keycode);
 
 #endif

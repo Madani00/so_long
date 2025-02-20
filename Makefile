@@ -4,8 +4,8 @@ CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 MK = make
 
-SRCS = mandatory/main.c mandatory/get_next_line.c mandatory/so_long1.c mandatory/free_error.c mandatory/utils1.c mandatory/utils2.c
-
+SRCS = mandatory/main.c mandatory/get_next_line.c mandatory/utils0.c mandatory/free_error.c \
+		mandatory/utils1.c mandatory/utils2.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)

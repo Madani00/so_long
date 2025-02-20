@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:46:12 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/20 12:06:28 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:25:30 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,36 +53,58 @@ void reach_door_exit(s_info *data)
 	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
 	{
 		write(1, "You won!\n", 9);
-		mlx_destroy_image(data->mlx, data->wall_img);
-		mlx_destroy_image(data->mlx, data->wall_img1);
-		mlx_destroy_image(data->mlx, data->empty_img);
-		mlx_destroy_image(data->mlx, data->player_img);
-		mlx_destroy_image(data->mlx, data->collect_img);
-		mlx_destroy_image(data->mlx, data->door_img);
-
-		mlx_destroy_image(data->mlx, data->player_down[0]);
-		mlx_destroy_image(data->mlx, data->player_down[1]);
-		mlx_destroy_image(data->mlx, data->player_down[2]);
-		mlx_destroy_image(data->mlx, data->player_down[3]);
-		mlx_destroy_image(data->mlx, data->player_right[0]);
-		mlx_destroy_image(data->mlx, data->player_right[1]);
-		mlx_destroy_image(data->mlx, data->player_right[2]);
-		mlx_destroy_image(data->mlx, data->player_right[3]);
-		mlx_destroy_image(data->mlx, data->player_left[0]);
-		mlx_destroy_image(data->mlx, data->player_left[1]);
-		mlx_destroy_image(data->mlx, data->player_left[2]);
-		mlx_destroy_image(data->mlx, data->player_left[3]);
-		mlx_destroy_image(data->mlx, data->player_up[0]);
-		mlx_destroy_image(data->mlx, data->player_up[1]);
-		mlx_destroy_image(data->mlx, data->player_up[2]);
-		mlx_destroy_image(data->mlx, data->player_up[3]);
-
-		mlx_destroy_window(data->mlx, data->win);
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-		free_map(&data);
-		free(data);
+		free_images(data);
+		free_minilbx(data);
 		exit(0);
 	}
 }
-//  2,200 allocs, 2,164 frees,
+
+void check_map_walls(s_info **data)
+{
+	int i;
+
+	if (!check_ones((*data)->map[0]) || !check_ones((*data)->map[(*data)->column - 1]))
+	{
+		free_map(data);
+		free_error((*data), "Oops! This map is invalid dummy 😓");
+	}
+	i = 1;
+	while (i < (*data)->column - 1)
+	{
+		if ((*data)->map[i][0] != '1' || (*data)->map[i][(*data)->row - 1] != '1')
+		{
+			free_map(data);
+			free_error((*data), "Oops! This map is invalid dummy 😓");
+		}
+		get_player_position(data, (*data)->map[i], i);
+		i++;
+	}
+}
+
+int correct_components(s_info **data)
+{
+	int i;
+	int jj;
+
+	if ((*data)->player != 1 || (*data)->collect == 0)
+		return (0);
+	i = 1;
+	while (i < (*data)->column - 1)
+	{
+		jj = 1;
+		while (jj < (*data)->row - 1)
+		{
+			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C')
+				return (0);
+			if ((*data)->c_map[i][jj] == 'E')
+				(*data)->exit++;
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0')
+				return (0);
+			jj++;
+		}
+		i++;
+	}
+	if ((*data)->exit != 1)
+		return (0);
+	return (1);
+}

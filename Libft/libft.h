@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 20:44:10 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/07 22:56:54 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:53:09 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdarg.h>
 
 typedef struct stack_a
 {
@@ -68,5 +69,11 @@ void		ft_lstdelone(t_my_stack *lst, int (*del)(int));
 void		ft_lstclear(t_my_stack **lst, int (*del)(int));
 void		ft_lstiter(t_my_stack *lst, int (*f)(int));
 t_my_stack	*ft_lstmap(t_my_stack *lst, int (*f)(int), int (*del)(int));
+
+int			ft_printf(const char *format, ...);
+int			put_nmb(int n);
+int			ft_putchar(char c);
+int			put_string(char *str);
+int			format_specifiers(va_list arg, char specifier);
 
 #endif

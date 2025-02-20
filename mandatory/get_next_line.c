@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/06 16:51:51 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:49:48 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,40 @@ char	*join(char *s1, char *s2)
 	new[i] = '\0';
 	free(s1);
 	return (new);
+}
+
+// void print_moves(s_info *data, int previous_x, int previous_y)
+// {
+// 	char *nmb;
+// 	nmb = ft_itoa(data->moves);
+// 	if (data->player_x != previous_x && data->player_y == previous_y)
+// 	{
+// 		write(1, "moves : ", 8);
+// 		write(1, nmb, ft_strlen(nmb));
+// 		write(1, "\n", 1);
+// 		free(nmb);
+// 		data->moves++;
+// 	}
+// 	else if (data->player_x == previous_x && data->player_y != previous_y)
+// 	{
+// 		write(1, "moves : ", 8);
+// 		write(1, nmb, ft_strlen(nmb));
+// 		write(1, "\n", 1);
+// 		free(nmb);
+// 		data->moves++;
+// 	}
+// }
+
+void print_moves(s_info *data, int previous_x, int previous_y)
+{
+	if (data->player_x != previous_x && data->player_y == previous_y)
+	{
+		ft_printf("moves : %d \n", data->moves);
+		data->moves++;
+	}
+	else if (data->player_x == previous_x && data->player_y != previous_y)
+	{
+		ft_printf("moves : %d \n", data->moves);
+		data->moves++;
+	}
 }
