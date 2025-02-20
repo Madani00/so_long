@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/19 12:10:40 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/19 22:35:34 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 
 #include <mlx.h>
-#include "Libft/libft.h"
+#include "../Libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -62,10 +62,6 @@ typedef struct map
 } s_info;
 
 #define ESC 65307
-// #define LEFT 65361
-// #define RIGHT 65363
-// #define UP 65362
-// #define DOWN 65364
 
 #define A 97
 #define D 100

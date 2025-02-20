@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/19 21:13:39 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/20 12:07:27 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,8 @@ void draw_player_collect(s_info *data)
 		while (i < data->row)
 		{
 			if (data->map[k][i] == 'C')
-			{
-				mlx_loop_hook(data->mlx, coin, data);
-			}
-				//mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * data->width, k * data->height);
+				//mlx_loop_hook(data->mlx, coin, data);
+				mlx_put_image_to_window(data->mlx, data->win, data->collect_img, i * data->width, k * data->height);
 			if (data->map[k][i] == 'E')
 			{
 				data->door_x = k;
@@ -261,6 +259,28 @@ int handle_key(int keycode, s_info *data)
 	// 	return (1);
 	if (keycode == ESC)
 	{
+		mlx_destroy_image(data->mlx, data->wall_img);
+		mlx_destroy_image(data->mlx, data->wall_img1);
+		mlx_destroy_image(data->mlx, data->empty_img);
+		mlx_destroy_image(data->mlx, data->player_img);
+		mlx_destroy_image(data->mlx, data->collect_img);
+		mlx_destroy_image(data->mlx, data->door_img);
+		mlx_destroy_image(data->mlx, data->player_down[0]);
+		mlx_destroy_image(data->mlx, data->player_down[1]);
+		mlx_destroy_image(data->mlx, data->player_down[2]);
+		mlx_destroy_image(data->mlx, data->player_down[3]);
+		mlx_destroy_image(data->mlx, data->player_right[0]);
+		mlx_destroy_image(data->mlx, data->player_right[1]);
+		mlx_destroy_image(data->mlx, data->player_right[2]);
+		mlx_destroy_image(data->mlx, data->player_right[3]);
+		mlx_destroy_image(data->mlx, data->player_left[0]);
+		mlx_destroy_image(data->mlx, data->player_left[1]);
+		mlx_destroy_image(data->mlx, data->player_left[2]);
+		mlx_destroy_image(data->mlx, data->player_left[3]);
+		mlx_destroy_image(data->mlx, data->player_up[0]);
+		mlx_destroy_image(data->mlx, data->player_up[1]);
+		mlx_destroy_image(data->mlx, data->player_up[2]);
+		mlx_destroy_image(data->mlx, data->player_up[3]);
 		mlx_destroy_window(data->mlx, data->win);
 		mlx_destroy_display(data->mlx);
 		free(data->mlx);
@@ -304,23 +324,23 @@ void load_images(s_info *data)
 	data->player_up[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/up/3.xpm", &data->width, &data->height);
 }
 
-void coin_animation(s_info *data)
-{
-	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
-	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
-	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
-	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
-	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
-	// data->frame = (data->frame + 1) % 4;
-	for (int i = 0; i < 4; i++)
-	{
-		if (!data->coins[i])
-		{
-			printf("Error: Failed to load coin image %d\n", i);
-			exit(1);
-		}
-	}
-}
+// void coin_animation(s_info *data)
+// {
+// 	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+// 	// data->frame = (data->frame + 1) % 4;
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		if (!data->coins[i])
+// 		{
+// 			printf("Error: Failed to load coin image %d\n", i);
+// 			exit(1);
+// 		}
+// 	}
+// }
 
 int main(int ac, char *av[])
 {
@@ -333,7 +353,7 @@ int main(int ac, char *av[])
 		load_images(data);
 		// mlx_key_hook(data->win, handle_key, data);
 		draw_wall(data);
-		coin_animation(data);
+		//coin_animation(data);
 		draw_player_collect(data);
 
 
