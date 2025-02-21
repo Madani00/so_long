@@ -5,7 +5,7 @@ RM = rm -f
 MK = make
 
 SRCS = mandatory/main.c mandatory/get_next_line.c mandatory/utils0.c mandatory/free_error.c \
-		mandatory/utils1.c mandatory/utils2.c
+		mandatory/utils1.c mandatory/utils2.c mandatory/utils3.c mandatory/utils4.c
 OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)

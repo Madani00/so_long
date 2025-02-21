@@ -12,3 +12,9 @@ It provides additional features for X11, like handling images and special window
 
 - canve webs to removes the background
 https://www.remove.bg/
+
+
+## invalid size read
+- make sure to free them in the same order
+mlx_destroy_window(data->mlx, data->win);
+mlx_destroy_display(data->mlx);

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:37:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/20 12:21:11 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/21 18:05:22 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,46 @@ void	free_map(s_info **data)
 	free((*data)->c_map);
 }
 
-void free_error(s_info *data, char *msg)
+void	free_error(s_info *data, char *msg)
 {
 	free(data);
 	write(2, "Error\n", 6);
 	ft_error(msg);
 }
 
-void free_images(s_info *data)
+void	free_images(s_info *data)
 {
-	mlx_destroy_image(data->mlx, data->wall_img);
-	mlx_destroy_image(data->mlx, data->wall_img1);
-	mlx_destroy_image(data->mlx, data->empty_img);
-	mlx_destroy_image(data->mlx, data->player_img);
-	mlx_destroy_image(data->mlx, data->collect_img);
-	mlx_destroy_image(data->mlx, data->door_img);
-	mlx_destroy_image(data->mlx, data->player_down[0]);
-	mlx_destroy_image(data->mlx, data->player_down[1]);
-	mlx_destroy_image(data->mlx, data->player_down[2]);
-	mlx_destroy_image(data->mlx, data->player_down[3]);
-	mlx_destroy_image(data->mlx, data->player_right[0]);
-	mlx_destroy_image(data->mlx, data->player_right[1]);
-	mlx_destroy_image(data->mlx, data->player_right[2]);
-	mlx_destroy_image(data->mlx, data->player_right[3]);
-	mlx_destroy_image(data->mlx, data->player_left[0]);
-	mlx_destroy_image(data->mlx, data->player_left[1]);
-	mlx_destroy_image(data->mlx, data->player_left[2]);
-	mlx_destroy_image(data->mlx, data->player_left[3]);
-	mlx_destroy_image(data->mlx, data->player_up[0]);
-	mlx_destroy_image(data->mlx, data->player_up[1]);
-	mlx_destroy_image(data->mlx, data->player_up[2]);
-	mlx_destroy_image(data->mlx, data->player_up[3]);
+	if (data->wall_img)
+		mlx_destroy_image(data->mlx, data->wall_img);
+	if (data->wall_img1)
+		mlx_destroy_image(data->mlx, data->wall_img1);
+	if (data->empty_img)
+		mlx_destroy_image(data->mlx, data->empty_img);
+	if (data->player_img)
+		mlx_destroy_image(data->mlx, data->player_img);
+	if (data->collect_img)
+		mlx_destroy_image(data->mlx, data->collect_img);
+	if (data->door_img)
+		mlx_destroy_image(data->mlx, data->door_img);
+	if (data->player_down[0])
+		mlx_destroy_image(data->mlx, data->player_down[0]);
+	if (data->player_down[1])
+		mlx_destroy_image(data->mlx, data->player_down[1]);
+	if (data->player_down[2])
+		mlx_destroy_image(data->mlx, data->player_down[2]);
+	if (data->player_down[3])
+		mlx_destroy_image(data->mlx, data->player_down[3]);
+	if (data->player_right[0])
+		mlx_destroy_image(data->mlx, data->player_right[0]);
+	if (data->player_right[1])
+		mlx_destroy_image(data->mlx, data->player_right[1]);
+	free_images2(data);
 }
 
-void free_minilbx(s_info *data)
+void	free_minilbx(s_info *data)
 {
-	mlx_destroy_window(data->mlx, data->win);
+	if (data->win != NULL)
+		mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
 	free_map(&data);

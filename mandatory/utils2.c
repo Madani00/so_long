@@ -6,38 +6,42 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:46:12 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/20 12:25:30 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/21 17:46:25 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void draw_wall_helper(s_info *game, int *k, int *i)
+void	draw_wall_helper(s_info *game, int *k, int *i)
 {
 	while (*i < game->row && *k % 2 == 0)
 	{
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
+				*i * game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1,
+				*i * game->width, *k * game->height);
 		(*i)++;
 	}
 	while (*i < game->row && *k % 2 != 0)
 	{
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i
+				* game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i
+				* game->width, *k * game->height);
 		(*i)++;
 	}
 }
 
-void draw_wall(s_info *game)
+void	draw_wall(s_info *game)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	k = 0;
 	while (k < game->column)
@@ -48,22 +52,23 @@ void draw_wall(s_info *game)
 	}
 }
 
-void reach_door_exit(s_info *data)
+void	reach_door_exit(s_info *data)
 {
 	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
 	{
 		write(1, "You won!\n", 9);
 		free_images(data);
 		free_minilbx(data);
-		exit(0);
+		exit(EXIT_SUCCESS);
 	}
 }
 
-void check_map_walls(s_info **data)
+void	check_map_walls(s_info **data)
 {
-	int i;
+	int	i;
 
-	if (!check_ones((*data)->map[0]) || !check_ones((*data)->map[(*data)->column - 1]))
+	if (!check_ones((*data)->map[0])
+		|| !check_ones((*data)->map[(*data)->column - 1]))
 	{
 		free_map(data);
 		free_error((*data), "Oops! This map is invalid dummy 😓");
@@ -71,7 +76,8 @@ void check_map_walls(s_info **data)
 	i = 1;
 	while (i < (*data)->column - 1)
 	{
-		if ((*data)->map[i][0] != '1' || (*data)->map[i][(*data)->row - 1] != '1')
+		if ((*data)->map[i][0] != '1' ||
+			(*data)->map[i][(*data)->row - 1] != '1')
 		{
 			free_map(data);
 			free_error((*data), "Oops! This map is invalid dummy 😓");
@@ -81,10 +87,10 @@ void check_map_walls(s_info **data)
 	}
 }
 
-int correct_components(s_info **data)
+int	correct_components(s_info **data)
 {
-	int i;
-	int jj;
+	int	i;
+	int	jj;
 
 	if ((*data)->player != 1 || (*data)->collect == 0)
 		return (0);
@@ -98,7 +104,8 @@ int correct_components(s_info **data)
 				return (0);
 			if ((*data)->c_map[i][jj] == 'E')
 				(*data)->exit++;
-			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0')
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E'
+				&& (*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0')
 				return (0);
 			jj++;
 		}
