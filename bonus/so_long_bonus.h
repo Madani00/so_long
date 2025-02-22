@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:16:57 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:20:51 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,6 @@ void	collect_coins(t_info *data);
 void	load_images2(t_info *data);
 void	mlx_window_fail(t_info *data);
 void	free_images2(t_info *data);
+int		cross_close(t_info *data);
 
 #endif

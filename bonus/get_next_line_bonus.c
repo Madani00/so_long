@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 21:15:02 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:16:20 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void print_moves(t_info *data, int previous_x, int previous_y)
 		mlx_string_put(data->mlx, data->win, 20, position, 0xFF0000, s_move);
 		ft_printf("%s\n", s_move);
 		data->moves++;
-		free(move);
-		free(s_move);
 	}
+	free(move);
+	free(s_move);
 }

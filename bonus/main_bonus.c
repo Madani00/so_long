@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:14:32 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:30:30 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,9 @@ int main(int ac, char *av[])
 		draw_wall(data);
 		// coin_animation(data);
 		draw_player_collect(data);
-		mlx_key_hook(data->win, handle_key, data);
+		mlx_hook(data->win, 2, 0, handle_key, data);
 		// mlx_loop_hook(data->mlx, coin, data);
+		mlx_hook(data->win, 17, 0, cross_close, data);
 		mlx_loop(data->mlx);
 	}
 	else

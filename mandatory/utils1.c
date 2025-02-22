@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:11:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:24:03 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void initiaze_struct(t_info **data)
 	(*data)->collect = 0;
 	(*data)->player = 0;
 	(*data)->exit = 0;
-	(*data)->moves = 0;
+	(*data)->moves = 1;
 	(*data)->animation = 0;
 	(*data)->width = 60;
 	(*data)->height = 60;
