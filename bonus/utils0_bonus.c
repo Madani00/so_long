@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils0.c                                           :+:      :+:    :+:   */
+/*   utils0_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:11:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:44:01 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void check_map_exetension(char *map_file)
 {
@@ -27,7 +27,7 @@ void check_map_exetension(char *map_file)
 void load_images(t_info *data)
 {
 	data->win = mlx_new_window(data->mlx, data->row * data->width,
-							   data->column * data->height, "So_long");
+							   data->column * data->height + 40, "So_long");
 	if (!data->win)
 		mlx_window_fail(data);
 	data->wall_img = mlx_xpm_file_to_image(data->mlx,

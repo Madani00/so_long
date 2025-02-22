@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   utils1_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:11:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:17:59 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void initiaze_struct(t_info **data)
 {
@@ -26,8 +26,8 @@ void initiaze_struct(t_info **data)
 	(*data)->animation = 0;
 	(*data)->width = 60;
 	(*data)->height = 60;
-	(*data)->frame = 0;
 	(*data)->win = NULL;
+	(*data)->moves = 0;
 }
 
 void get_mapsize(char **av, t_info **data)

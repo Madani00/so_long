@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 10:32:37 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/22 21:15:02 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 char *fetch_line(char *buffer)
 {
@@ -89,14 +89,21 @@ char *join(char *s1, char *s2)
 
 void print_moves(t_info *data, int previous_x, int previous_y)
 {
-	if (data->player_x != previous_x && data->player_y == previous_y)
+	char *move;
+	char *s_move;
+	int position;
+
+	move = ft_itoa(data->moves);
+	s_move = ft_strjoin("Moves  :  ", move);
+	position = data->column * data->height + 20;
+	if ((data->player_x != previous_x && data->player_y == previous_y) ||
+		(data->player_x == previous_x && data->player_y != previous_y))
 	{
-		ft_printf("moves : %d \n", data->moves);
+		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, 60, position - 20);
+		mlx_string_put(data->mlx, data->win, 20, position, 0xFF0000, s_move);
+		ft_printf("%s\n", s_move);
 		data->moves++;
-	}
-	else if (data->player_x == previous_x && data->player_y != previous_y)
-	{
-		ft_printf("moves : %d \n", data->moves);
-		data->moves++;
+		free(move);
+		free(s_move);
 	}
 }

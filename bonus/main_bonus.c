@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 19:20:19 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:14:32 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
+
+// int coin(void *param)
+// {
+// 	t_info *data = (t_info *)param;
+
+// 	// Put the current frame's coin image at the correct position
+// 	mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+
+// 	// Move to the next frame (loops between 0 and 3)
+// 	data->frame = (data->frame + 1) % 4;
+
+// 	return (0);
+// }
 
 void draw_player_collect(t_info *data)
 {
@@ -26,6 +39,7 @@ void draw_player_collect(t_info *data)
 		while (i < data->row)
 		{
 			if (data->map[k][i] == 'C')
+				// mlx_loop_hook(data->mlx, coin, data);
 				mlx_put_image_to_window(data->mlx, data->win, data->collect_img,
 										i * data->width, k * data->height);
 			if (data->map[k][i] == 'E')
@@ -76,6 +90,8 @@ void moving_player(t_info *data, int keycode)
 
 int handle_key(int keycode, t_info *data)
 {
+	// if (!data)
+	// 	return (1);
 	if (keycode == ESC)
 	{
 		free_images(data);
@@ -93,6 +109,24 @@ int handle_key(int keycode, t_info *data)
 	return (0);
 }
 
+// void coin_animation(t_info *data)
+// {
+// 	data->coins[0] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[1] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	data->coins[2] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll.xpm", &data->width, &data->height);
+// 	data->coins[3] = mlx_xpm_file_to_image(data->mlx, "./imgs/coll22.xpm", &data->width, &data->height);
+// 	// mlx_put_image_to_window(data->mlx, data->win, data->coins[data->frame], 2 * data->width, 2 * data->height);
+// 	// data->frame = (data->frame + 1) % 4;
+// 	for (int i = 0; i < 4; i++)
+// 	{
+// 		if (!data->coins[i])
+// 		{
+// 			printf("Error: Failed to load coin image %d\n", i);
+// 			exit(1);
+// 		}
+// 	}
+// }
+
 int main(int ac, char *av[])
 {
 	t_info *data;
@@ -107,11 +141,12 @@ int main(int ac, char *av[])
 			free_error(data, "Oops! mlx_init failed 😓");
 		}
 		load_images(data);
+		// mlx_key_hook(data->win, handle_key, data);
 		draw_wall(data);
+		// coin_animation(data);
 		draw_player_collect(data);
 		mlx_key_hook(data->win, handle_key, data);
-
-		mlx_hook(data->win, 17, 0, cross_close, data);
+		// mlx_loop_hook(data->mlx, coin, data);
 		mlx_loop(data->mlx);
 	}
 	else

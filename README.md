@@ -18,3 +18,6 @@ https://www.remove.bg/
 - make sure to free them in the same order
 mlx_destroy_window(data->mlx, data->win);
 mlx_destroy_display(data->mlx);
+
+# mast 1L << 0
+- The mask is a bitwise filter that lets you fine-tune which events you want to capture. Each event in X11 has a corresponding mask.

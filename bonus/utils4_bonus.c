@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils4.c                                           :+:      :+:    :+:   */
+/*   utils4_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:44:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 19:11:39 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:15:18 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void mlx_window_fail(t_info *data)
 {
@@ -41,12 +41,4 @@ void free_images2(t_info *data)
 		mlx_destroy_image(data->mlx, data->player_up[2]);
 	if (data->player_up[3])
 		mlx_destroy_image(data->mlx, data->player_up[3]);
-}
-
-int cross_close(t_info *data)
-{
-
-	free_images(data);
-	free_minilbx(data);
-	exit(1);
 }
