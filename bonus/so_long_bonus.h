@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 22:20:51 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:42:59 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ typedef struct map
 	int width;
 	int height;
 	void *coins[4];
-	int frame;
+	void *enemy[5];
+	int enemy_ani;
+	int enemy_x;
+	int enemy_y;
+	int speed;
+	int enemy_ind[10][2];
 } t_info;
 
 #define ESC 65307

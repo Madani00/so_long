@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 19:12:10 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:43:07 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct map
 	int animation;
 	int width;
 	int height;
-	void *coins[4];
-	int frame;
 } t_info;
 
 #define ESC 65307

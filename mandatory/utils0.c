@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/23 09:16:34 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:13:49 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,35 @@ void load_images(t_info *data)
 	load_images2(data);
 }
 
+void check_all_map(t_info **data)
+{
+	int k;
+	int i;
+
+	k = 0;
+	while (k < (*data)->column)
+	{
+		i = 0;
+		while (i < (*data)->row)
+		{
+			if ((*data)->map[k][i] == 'x')
+			{
+				free_map(data);
+				free_error((*data), "Oops! Number of map's components INVALID 😓");
+			}
+			i++;
+		}
+		k++;
+	}
+}
+
 void check_map_valid(char **av, t_info **data)
 {
 	check_map_exetension(av[1]);
 	initiaze_struct(data);
 	get_mapsize(av, data);
 	check_map_walls(data);
+	check_all_map(data);
 	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PC");
 	if (!correct_components(data))
 	{

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 22:24:23 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:26:40 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void initiaze_struct(t_info **data)
 	(*data)->width = 60;
 	(*data)->height = 60;
 	(*data)->win = NULL;
+	(*data)->enemy_ani = 0;
+	(*data)->speed = 0;
 }
 
 void get_mapsize(char **av, t_info **data)

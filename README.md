@@ -21,3 +21,27 @@ mlx_destroy_display(data->mlx);
 
 # mast 1L << 0
 - The mask is a bitwise filter that lets you fine-tune which events you want to capture. Each event in X11 has a corresponding mask.
+
+# flip the photos
+https://pixlr.com/express/
+
+- compile with
+-lmlx -lX11 -lXext -lm
+
+# pixel bytes
+- XPM is a simple, ASCII-based image format perfect for embedding or loading in MiniLibX.
+- In MiniLibX, XPM images typically use 24 bpp (RGB) or 32 bpp (RGBA), which means each pixel holds 3 or 4 bytes.
+
+# X WINDOW
+- is a program that runs in the background on linux systems
+- X uses a communication protocol to talk between the server and clients.
+- how: it take commands and translates them to commands and it send to a client
+- X client (application ): interact with the hardware on your machine
+- The X server runs on your computer, and the clients can run either on the same machine or on a remote machine (over a network).
+EXAMPLE : if i want to access a machine remotely and run an app that requires env to run then i can get to that machine to send me commands necessary to draw the pictures on my machine
+
+
+
+---
+- to check which one used by your system
+echo $XDG_SESSION_TYPE

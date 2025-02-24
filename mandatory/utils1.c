@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 22:24:03 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 21:26:45 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void initiaze_struct(t_info **data)
 	(*data)->animation = 0;
 	(*data)->width = 60;
 	(*data)->height = 60;
-	(*data)->frame = 0;
 	(*data)->win = NULL;
 }
 
@@ -40,17 +39,18 @@ void get_mapsize(char **av, t_info **data)
 	all_lines = NULL;
 	line = get_next_line(fd);
 	if (!line)
-		free_error((*data), "Oops! This map is EMPTY 🚩 dummy 😓");
+		free_error((*data), "Oops! This map is EMPTY haha  🚩 dummy 😓");
 	(*data)->row = ft_strlen(line) - 1;
 	while (line != NULL)
 	{
+		i++;
 		if ((*data)->row != (ft_strlen(line) - 1))
 		{
 			free(all_lines);
 			free(line);
 			free_error((*data), "Oops! This map is invalid dummy 😓");
 		}
-		all_lines = ft_strjoin(all_lines, line);
+		all_lines = join(all_lines, line);
 		(*data)->column++;
 		free(line);
 		line = get_next_line(fd);

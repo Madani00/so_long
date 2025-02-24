@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 22:26:11 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:34:27 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void check_map_valid(char **av, t_info **data)
 	initiaze_struct(data);
 	get_mapsize(av, data);
 	check_map_walls(data);
-	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PC");
+	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PCA");
 	if (!correct_components(data))
 	{
 		free_map(data);
@@ -72,7 +72,7 @@ int increment_components(char *targets, char pos, t_info **data)
 	int i;
 
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		if (targets[i] == pos)
 		{

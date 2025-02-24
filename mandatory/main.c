@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/23 09:14:24 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 12:17:27 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int main(int ac, char *av[])
 		draw_wall(data);
 		draw_player_collect(data);
 		mlx_key_hook(data->win, handle_key, data);
-
 		mlx_hook(data->win, 17, 0, cross_close, data);
 		mlx_loop(data->mlx);
 	}
