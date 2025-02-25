@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/24 12:17:27 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:45:01 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void draw_player_collect(t_info *data)
 {
 	int i;
 	int k;
+	int enemy_index;
 
 	mlx_put_image_to_window(data->mlx, data->win, data->player_img,
 							data->player_y * data->width, data->player_x * data->height);
+	enemy_index = 0;
 	k = 0;
 	while (k < data->column)
 	{
@@ -28,6 +30,13 @@ void draw_player_collect(t_info *data)
 			if (data->map[k][i] == 'C')
 				mlx_put_image_to_window(data->mlx, data->win, data->collect_img,
 										i * data->width, k * data->height);
+			if (data->map[k][i] == 'A')
+			{
+				data->enemy_nmb[enemy_index].enemy_x = k;
+				data->enemy_nmb[enemy_index].enemy_y = i;
+				mlx_loop_hook(data->mlx, render_man, data);
+				enemy_index++;
+			}
 			if (data->map[k][i] == 'E')
 			{
 				data->door_x = k;
@@ -93,6 +102,16 @@ int handle_key(int keycode, t_info *data)
 	return (0);
 }
 
+int		render_man(t_info *data)
+{
+	if (data->enemy_ani == 5)
+		data->enemy_ani = 0; // enemy_nmb[enemy_index].enemy_x
+	mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->enemy_ani], data->enemy_nmb[0].enemy_y  * data->width, data->enemy_nmb[0].enemy_x  * data->height);
+	usleep(95000);
+	data->enemy_ani += 1;
+	return 0;
+}
+
 int main(int ac, char *av[])
 {
 	t_info *data;
@@ -107,13 +126,15 @@ int main(int ac, char *av[])
 			free_error(data, "Oops! mlx_init failed 😓");
 		}
 		load_images(data);
+		load_enemy(data);
 		draw_wall(data);
 		draw_player_collect(data);
 		mlx_key_hook(data->win, handle_key, data);
+		// mlx_loop_hook(data->mlx, render_man, data);
 		mlx_hook(data->win, 17, 0, cross_close, data);
 		mlx_loop(data->mlx);
 	}
 	else
-		ft_error("Try: executable & maps.ber 🚮");
+		ft_error("Try: ./so_long  maps.ber 🚮");
 	return (0);
 }

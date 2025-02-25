@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/24 11:43:07 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:35:15 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+
+typedef struct enemy
+{
+	int enemy_x;
+	int enemy_y;
+} t_enemy;
 
 typedef struct map
 {
@@ -56,6 +62,11 @@ typedef struct map
 	int animation;
 	int width;
 	int height;
+	void *effect;
+
+	void *enemy[5];
+	int enemy_ani;
+	t_enemy enemy_nmb[100];
 } t_info;
 
 #define ESC 65307
@@ -98,5 +109,7 @@ void load_images2(t_info *data);
 void mlx_window_fail(t_info *data);
 void free_images2(t_info *data);
 int cross_close(t_info *data);
+void  load_enemy(t_info *data);
+int		render_man(t_info *data);
 
 #endif

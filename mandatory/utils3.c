@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:05:49 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/21 19:11:06 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:25:46 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void collect_coins(t_info *data)
 	if (data->map[data->player_x][data->player_y] == 'C')
 	{
 		data->collect--;
+		//data->map[data->player_x][data->player_y] = '0';
+		mlx_put_image_to_window(data->mlx, data->win, data->effect,
+								data->player_y * 60, data->player_x * 60);
+		usleep(100000);
 		data->map[data->player_x][data->player_y] = '0';
 	}
 }

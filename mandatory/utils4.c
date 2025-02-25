@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:44:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/22 19:11:39 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/25 12:20:01 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,18 @@ int cross_close(t_info *data)
 	free_images(data);
 	free_minilbx(data);
 	exit(1);
+}
+
+void  load_enemy(t_info *data)
+{
+	data->enemy[0] = mlx_xpm_file_to_image(data->mlx,
+										   "./imgs/enemy/0.xpm", &data->width, &data->height);
+	data->enemy[1]= mlx_xpm_file_to_image(data->mlx,
+												 "./imgs/enemy/1.xpm", &data->width, &data->height);
+	data->enemy[2] = mlx_xpm_file_to_image(data->mlx,
+												 "./imgs/enemy/2.xpm", &data->width, &data->height);
+	data->enemy[3] = mlx_xpm_file_to_image(data->mlx,
+	 											 "./imgs/enemy/3.xpm", &data->width, &data->height);
+	data->enemy[4] = mlx_xpm_file_to_image(data->mlx,
+												 "./imgs/enemy/4.xpm", &data->width, &data->height);
 }

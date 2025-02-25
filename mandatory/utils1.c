@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/24 21:26:45 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:03:02 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void get_mapsize(char **av, t_info **data)
 	(*data)->row = ft_strlen(line) - 1;
 	while (line != NULL)
 	{
-		i++;
 		if ((*data)->row != (ft_strlen(line) - 1))
 		{
 			free(all_lines);
