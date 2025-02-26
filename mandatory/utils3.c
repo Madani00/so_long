@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:05:49 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/25 21:39:44 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:09:33 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void free_all_mlx(t_info *data)
 
 void images_failed(t_info *data)
 {
+	load_enemy(data);
 	if (!data->wall_img || !data->wall_img1 || !data->empty_img || !data->player_img || !data->collect_img || !data->door_img)
 		free_all_mlx(data);
 	if (!data->player_down[0] || !data->player_down[1] || !data->player_down[2] || !data->player_down[3])
@@ -70,6 +71,8 @@ void images_failed(t_info *data)
 	if (!data->player_left[0] || !data->player_left[1] || !data->player_left[2] || !data->player_left[3])
 		free_all_mlx(data);
 	if (!data->player_up[0] || !data->player_up[1] || !data->player_up[2] || !data->player_up[3])
+		free_all_mlx(data);
+	if (!data->enemy[0] || !data->enemy[1] || !data->enemy[2] || !data->enemy[3] || !data->enemy[4])
 		free_all_mlx(data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/25 14:14:49 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 21:27:45 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void check_map_exetension(char *map_file)
 void load_images(t_info *data)
 {
 	data->win = mlx_new_window(data->mlx, data->row * data->width,
-							   data->column * data->height, "So_long");
+							   data->column * data->height + 32, "So_long");
 	if (!data->win)
 		mlx_window_fail(data);
 	data->wall_img = mlx_xpm_file_to_image(data->mlx,
@@ -88,6 +88,7 @@ void check_map_valid(char **av, t_info **data)
 		free_map(data);
 		free_error((*data), "Oops! Number of map's components INVALID 😓");
 	}
+	window_size_error(*data);
 }
 
 int increment_components(char *targets, char pos, t_info **data)

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 14:59:52 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:36:58 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void initiaze_struct(t_info **data)
 	(*data)->width = 60;
 	(*data)->height = 60;
 	(*data)->win = NULL;
-	(*data)->e_nmb->moves = 0;
+	// (*data)->e_nmb->moves = 0;
 	(*data)->e_index = 0;
 }
 

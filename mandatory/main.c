@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 15:29:26 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:35:58 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void draw_player_collect_enemy(t_info *data)
 			{
 				data->e_nmb[data->e_index].e_x = k;
 				data->e_nmb[data->e_index].e_y = i;
-				// mlx_loop_hook(data->mlx, render_e, data);
+				data->e_nmb[data->e_index].moves = 0;
+				mlx_loop_hook(data->mlx, render_enemy, data);
 				data->e_index++;
 			}
 			if (data->map[k][i] == 'E')
@@ -45,7 +46,7 @@ void draw_player_collect_enemy(t_info *data)
 		k++;
 	}
 	data->enemy_nmb = data->e_index;
-	mlx_loop_hook(data->mlx, render_enemy, data);
+	//mlx_loop_hook(data->mlx, render_enemy, data);
 }
 
 void change_pos_collect(t_info *data, int keycode)
@@ -104,7 +105,7 @@ int handle_key(int keycode, t_info *data)
 
 int wall_enemy_coin(char c)
 {
-	if (c != '1' && c != 'C' && c != 'A')
+	if (c != '1' && c != 'C' && c != 'A' && c != 'E')
 		return (1);
 	return (0);
 }
@@ -118,6 +119,7 @@ void idle_animation(t_info *data)
 
 void choose_direction(t_info *data)
 {
+
 	if (wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1])
 		|| wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
 	{
@@ -136,7 +138,6 @@ int render_enemy(t_info *data)
 	idle_animation(data);
 	if (data->e_ani == 5)
 		data->e_ani = 0;
-
 	data->e_nmb[data->e_index].pre_x = data->e_nmb[data->e_index].e_x;
 	data->e_nmb[data->e_index].pre_y = data->e_nmb[data->e_index].e_y;
 
@@ -145,13 +146,10 @@ int render_enemy(t_info *data)
 		data->e_nmb[data->e_index].moves = 1;
 	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
 		data->e_nmb[data->e_index].moves = 0;
-
-	if (data->e_nmb[data->e_index].e_x == data->player_x && data->e_nmb[data->e_index].e_y == data->player_y)
-		exit(1);
-
+	touch_enemy(data);
 	usleep(50000);
-	data->e_index++; // how
-	return 0;
+	data->e_index++;
+	return (0);
 }
 
 
@@ -169,7 +167,6 @@ int main(int ac, char *av[])
 			free_error(data, "Oops! mlx_init failed 😓");
 		}
 		load_images(data);
-		load_enemy(data);
 		draw_wall(data);
 		// data->fire = mlx_xpm_file_to_image(data->mlx, "fire.xpm", &data->width, &data->height);
 		draw_player_collect_enemy(data);

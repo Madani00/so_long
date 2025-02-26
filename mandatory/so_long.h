@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 15:24:56 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:15:15 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,8 @@ int cross_close(t_info *data);
 void  load_enemy(t_info *data);
 int render_enemy(t_info *data);
 int wall_enemy_coin(char c);
+void window_size_error(t_info *data);
+void free_images3(t_info *data);
+void touch_enemy(t_info *data);
 
 #endif

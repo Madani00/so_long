@@ -6,7 +6,8 @@ RM = rm -f
 MK = make
 
 SRCS = mandatory/main.c mandatory/get_next_line.c mandatory/utils0.c mandatory/free_error.c \
-		mandatory/utils1.c mandatory/utils2.c mandatory/utils3.c mandatory/utils4.c
+		mandatory/utils1.c mandatory/utils2.c mandatory/utils3.c mandatory/utils4.c \
+		mandatory/utils5.c
 SRCS_B = bonus/main_bonus.c bonus/get_next_line_bonus.c bonus/utils0_bonus.c bonus/free_error_bonus.c \
 		bonus/utils1_bonus.c bonus/utils2_bonus.c bonus/utils3_bonus.c bonus/utils4_bonus.c
 
