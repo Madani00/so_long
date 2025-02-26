@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/25 15:45:01 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:18:02 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void draw_player_collect(t_info *data)
 			{
 				data->enemy_nmb[enemy_index].enemy_x = k;
 				data->enemy_nmb[enemy_index].enemy_y = i;
-				mlx_loop_hook(data->mlx, render_man, data);
+				mlx_loop_hook(data->mlx, render_enemy, data);
 				enemy_index++;
 			}
 			if (data->map[k][i] == 'E')
@@ -95,6 +95,8 @@ int handle_key(int keycode, t_info *data)
 	reach_door_exit(data);
 	if (data->direction != -1)
 	{
+		mlx_put_image_to_window(data->mlx, data->win, data->fire,
+								data->previous_y * 60, data->previous_x * 60); // mmm
 		mlx_put_image_to_window(data->mlx, data->win, data->empty_img,
 								data->previous_y * 60, data->previous_x * 60);
 	}
@@ -102,13 +104,32 @@ int handle_key(int keycode, t_info *data)
 	return (0);
 }
 
-int		render_man(t_info *data)
+int render_enemy(t_info *data)
 {
 	if (data->enemy_ani == 5)
-		data->enemy_ani = 0; // enemy_nmb[enemy_index].enemy_x
-	mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->enemy_ani], data->enemy_nmb[0].enemy_y  * data->width, data->enemy_nmb[0].enemy_x  * data->height);
-	usleep(95000);
+		data->enemy_ani = 0;
+	data->enemy_nmb[0].pre_x = data->enemy_nmb[0].enemy_x;
+	data->enemy_nmb[0].pre_y = data->enemy_nmb[0].enemy_y;
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y - 1] != '1' || data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y + 1] != '1') // move enemy
+	{
+		if (data->enemy_nmb[0].moves)
+			data->enemy_nmb[0].enemy_y++;
+		else
+			data->enemy_nmb[0].enemy_y--;
+		data->map[data->enemy_nmb[0].pre_x][data->enemy_nmb[0].pre_y] = '0';
+		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->enemy_nmb[0].pre_y * data->width, data->enemy_nmb[0].pre_x * data->height);
+		mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->enemy_ani], data->enemy_nmb[0].enemy_y * data->width, data->enemy_nmb[0].enemy_x * data->height);
+	}
+
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y - 1] == '1')
+		data->enemy_nmb[0].moves = 1;
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y + 1] == '1')
+		data->enemy_nmb[0].moves = 0;
+
+	if (data->enemy_nmb[0].enemy_x == data->player_x && data->enemy_nmb[0].enemy_y == data->player_y)
+		exit(1);
 	data->enemy_ani += 1;
+	usleep(95000);
 	return 0;
 }
 
@@ -128,6 +149,7 @@ int main(int ac, char *av[])
 		load_images(data);
 		load_enemy(data);
 		draw_wall(data);
+		data->fire = mlx_xpm_file_to_image(data->mlx, "fire.xpm", &data->width, &data->height);
 		draw_player_collect(data);
 		mlx_key_hook(data->win, handle_key, data);
 		// mlx_loop_hook(data->mlx, render_man, data);

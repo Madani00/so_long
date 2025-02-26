@@ -45,3 +45,67 @@ EXAMPLE : if i want to access a machine remotely and run an app that requires en
 ---
 - to check which one used by your system
 echo $XDG_SESSION_TYPE
+
+- Idle Animations
+when your player still moves without pressing anything
+
+
+Final Effect
+
+✔️ Press Left → Player moves left + animated movement frames
+✔️ Press Nothing → Player stays in place but has a small "idle effect"
+✔️ Press Right → Player moves right with animation
+
+
+//  int moving; 1 = moving, 0 = idle
+
+int render_player(s_info *data)
+{
+    if (data->player.moving)
+        data->player.frame = (data->player.frame + 1) % 4; // Change frame for movement
+    else
+        data->player.frame = (data->player.frame + 1) % 2; // Smaller animation for idle
+
+    mlx_put_image_to_window(data->mlx, data->win,
+        data->player.sprites[data->player.direction][data->player.frame],
+        data->player.x * TILE_SIZE, data->player.y * TILE_SIZE);
+    return (0);
+}
+
+1 - Erase the old enemy position – Instead of redrawing everything, just redraw the tile that was underneath the enemy (like the floor or background). This ensures the old enemy sprite is removed cleanly.
+2 - Update the enemy's position – Change the enemy’s coordinates based on its movement logic. If the enemy moves left or right, update its X position. If it moves up or down, update its Y position.
+3 - Draw the enemy at the new position – After updating the position, draw the enemy sprite in the new location.
+4 - Handle movement boundaries – If the enemy reaches a certain limit (like a wall or a max distance), make it change direction or stop moving.
+
+
+
+// enemy works now congrats
+
+int render_enemy(t_info *data)
+{
+	if (data->enemy_ani == 5)
+		data->enemy_ani = 0;
+	data->enemy_nmb[0].pre_x = data->enemy_nmb[0].enemy_x;
+	data->enemy_nmb[0].pre_y = data->enemy_nmb[0].enemy_y;
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y - 1] != '1' || data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y + 1] != '1') // move enemy
+	{
+		if (data->enemy_nmb[0].moves)
+			data->enemy_nmb[0].enemy_y++;
+		else
+			data->enemy_nmb[0].enemy_y--;
+		data->map[data->enemy_nmb[0].pre_x][data->enemy_nmb[0].pre_y] = '0';
+		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->enemy_nmb[0].pre_y * data->width, data->enemy_nmb[0].pre_x * data->height);
+		mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->enemy_ani], data->enemy_nmb[0].enemy_y * data->width, data->enemy_nmb[0].enemy_x * data->height);
+	}
+
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y - 1] == '1')
+		data->enemy_nmb[0].moves = 1;
+	if (data->map[data->enemy_nmb[0].enemy_x][data->enemy_nmb[0].enemy_y + 1] == '1')
+		data->enemy_nmb[0].moves = 0;
+
+	if (data->enemy_nmb[0].enemy_x == data->player_x && data->enemy_nmb[0].enemy_y == data->player_y)
+		exit(1);
+	data->enemy_ani += 1;
+	usleep(95000);
+	return 0;
+}
