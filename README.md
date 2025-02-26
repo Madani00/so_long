@@ -109,3 +109,41 @@ int render_enemy(t_info *data)
 	usleep(95000);
 	return 0;
 }
+
+
+// niiiiiiiiiiiiiice
+
+int render_enemy(t_info *data)
+{
+
+	if (data->enemy_index == 4) // how
+		data->enemy_index = 0;
+
+	if (data->enemy_ani == 5)
+		data->enemy_ani = 0;
+	data->enemy_nmb[data->enemy_index].pre_x = data->enemy_nmb[data->enemy_index].enemy_x;
+	data->enemy_nmb[data->enemy_index].pre_y = data->enemy_nmb[data->enemy_index].enemy_y;
+	if (data->map[data->enemy_nmb[data->enemy_index].enemy_x][data->enemy_nmb[data->enemy_index].enemy_y - 1] != '1' || data->map[data->enemy_nmb[data->enemy_index].enemy_x][data->enemy_nmb[data->enemy_index].enemy_y + 1] != '1') // move enemy
+	{
+		if (data->enemy_nmb[data->enemy_index].moves)
+			data->enemy_nmb[data->enemy_index].enemy_y++;
+		else
+			data->enemy_nmb[data->enemy_index].enemy_y--;
+		data->map[data->enemy_nmb[data->enemy_index].pre_x][data->enemy_nmb[data->enemy_index].pre_y] = '0';
+		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->enemy_nmb[data->enemy_index].pre_y * data->width, data->enemy_nmb[data->enemy_index].pre_x * data->height);
+		mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->enemy_ani], data->enemy_nmb[data->enemy_index].enemy_y * data->width, data->enemy_nmb[data->enemy_index].enemy_x * data->height);
+	}
+
+	if (data->map[data->enemy_nmb[data->enemy_index].enemy_x][data->enemy_nmb[data->enemy_index].enemy_y - 1] == '1')
+		data->enemy_nmb[data->enemy_index].moves = 1;
+	if (data->map[data->enemy_nmb[data->enemy_index].enemy_x][data->enemy_nmb[data->enemy_index].enemy_y + 1] == '1')
+		data->enemy_nmb[data->enemy_index].moves = 0;
+
+	if (data->enemy_nmb[data->enemy_index].enemy_x == data->player_x && data->enemy_nmb[data->enemy_index].enemy_y == data->player_y)
+		exit(1);
+	data->enemy_ani += 1;
+
+	usleep(40000);
+	data->enemy_index++; // how
+	return 0;
+}

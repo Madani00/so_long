@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 09:40:03 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:03:20 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 typedef struct enemy
 {
 	int num;
-	int enemy_x;
-	int enemy_y;
+	int e_x;
+	int e_y;
 	int moves;
 	int pre_x;
 	int pre_y;
@@ -68,8 +68,9 @@ typedef struct map
 	int height;
 	void *effect;
 	void *enemy[5];
-	int enemy_ani;
-	t_enemy enemy_nmb[100];
+	int e_ani;
+	t_enemy e_nmb[100];
+	int e_index;
 	void *fire;
 } t_info;
 
@@ -114,5 +115,6 @@ void free_images2(t_info *data);
 int cross_close(t_info *data);
 void  load_enemy(t_info *data);
 int render_enemy(t_info *data);
+int wall_enemy_coin(char c);
 
 #endif
