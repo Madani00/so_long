@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 15:15:19 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:29:26 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void draw_player_collect_enemy(t_info *data)
 										i * data->width, k * data->height);
 			if (data->map[k][i] == 'A')
 			{
-				printf("%d \n", data->e_index);
 				data->e_nmb[data->e_index].e_x = k;
 				data->e_nmb[data->e_index].e_y = i;
 				// mlx_loop_hook(data->mlx, render_e, data);
@@ -45,6 +44,7 @@ void draw_player_collect_enemy(t_info *data)
 		}
 		k++;
 	}
+	data->enemy_nmb = data->e_index;
 	mlx_loop_hook(data->mlx, render_enemy, data);
 }
 
@@ -111,20 +111,13 @@ int wall_enemy_coin(char c)
 
 void idle_animation(t_info *data)
 {
-	if (data->e_index == 4)
+	if (data->e_index == data->enemy_nmb)
 		data->e_index = 0;
 	data->e_ani += 1;
 }
-int render_enemy(t_info *data)
+
+void choose_direction(t_info *data)
 {
-
-	idle_animation(data);
-
-	if (data->e_ani == 5)
-		data->e_ani = 0;
-	data->e_nmb[data->e_index].pre_x = data->e_nmb[data->e_index].e_x;
-	data->e_nmb[data->e_index].pre_y = data->e_nmb[data->e_index].e_y;
-
 	if (wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1])
 		|| wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
 	{
@@ -136,7 +129,18 @@ int render_enemy(t_info *data)
 		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, data->e_nmb[data->e_index].pre_y * data->width, data->e_nmb[data->e_index].pre_x * data->height);
 		mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->e_ani], data->e_nmb[data->e_index].e_y * data->width, data->e_nmb[data->e_index].e_x * data->height);
 	}
+}
 
+int render_enemy(t_info *data)
+{
+	idle_animation(data);
+	if (data->e_ani == 5)
+		data->e_ani = 0;
+
+	data->e_nmb[data->e_index].pre_x = data->e_nmb[data->e_index].e_x;
+	data->e_nmb[data->e_index].pre_y = data->e_nmb[data->e_index].e_y;
+
+	choose_direction(data);
 	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1]))
 		data->e_nmb[data->e_index].moves = 1;
 	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))

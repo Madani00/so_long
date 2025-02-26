@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 15:03:20 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:24:56 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct map
 	int e_ani;
 	t_enemy e_nmb[100];
 	int e_index;
+	int enemy_nmb;
 	void *fire;
 } t_info;
 
