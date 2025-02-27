@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 22:15:15 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:29:30 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 typedef struct enemy
 {
-	int num;
 	int e_x;
 	int e_y;
 	int moves;
@@ -53,7 +52,6 @@ typedef struct map
 	void *player_img;
 	void *collect_img;
 	void *door_img;
-	int moves;
 	int door_x;
 	int door_y;
 	int direction;
@@ -63,16 +61,16 @@ typedef struct map
 	void *player_down[4];
 	int previous_x;
 	int previous_y;
-	int animation;
+	int moves;
+	// int animation;
 	int width;
 	int height;
-	void *effect;
+	// void *effect;
 	void *enemy[5];
 	int e_ani;
 	t_enemy e_nmb[100];
 	int e_index;
 	int enemy_nmb;
-	void *fire;
 } t_info;
 
 #define ESC 65307

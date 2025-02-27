@@ -92,3 +92,31 @@ mlx_destroy image to delete all the leaks
 1111111111111111
 
 
+
+	int moves = 1;
+	int animation = 0;
+	int width = 60;
+	int height = 60 ;
+
+	void *effect;
+	void *enemy[5];
+	int e_ani = 0;
+	t_enemy e_nmb[100];
+	int e_index = 0;
+	int enemy_nmb;
+
+enemy
+{
+	int e_x = k;
+	int e_y = i;
+	int moves;                // right_or_left  data->e_nmb[data->e_index].moves = 1; or 0
+	int pre_x = e_x;
+	int pre_y = e_y;
+} t_enemy;
+
+
+
+
+	(*data)->e_nmb->moves = 0;
+
+

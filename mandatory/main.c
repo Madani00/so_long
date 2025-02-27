@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 22:35:58 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:27:41 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void draw_player_collect_enemy(t_info *data)
 			{
 				data->e_nmb[data->e_index].e_x = k;
 				data->e_nmb[data->e_index].e_y = i;
-				data->e_nmb[data->e_index].moves = 0;
+
+				//data->e_nmb[data->e_index].moves = 0; // caused a
 				mlx_loop_hook(data->mlx, render_enemy, data);
 				data->e_index++;
 			}
@@ -40,6 +41,7 @@ void draw_player_collect_enemy(t_info *data)
 			{
 				data->door_x = k;
 				data->door_y = i;
+				data->map[k][i] = '0';
 			}
 			i++;
 		}
@@ -57,8 +59,11 @@ void change_pos_collect(t_info *data, int keycode)
 	print_moves(data, data->previous_x, data->previous_y);
 	collect_coins(data);
 	if (data->collect == 0)
+	{
+		data->map[data->door_x][data->door_y] = 'E';
 		mlx_put_image_to_window(data->mlx, data->win, data->door_img,
 								data->door_y * 60, data->door_x * 60);
+	}
 }
 
 void moving_player(t_info *data, int keycode)
@@ -119,8 +124,12 @@ void idle_animation(t_info *data)
 
 void choose_direction(t_info *data)
 {
-
-	if (wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1])
+	if  (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1])
+		&& !wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
+	{
+		mlx_put_image_to_window(data->mlx, data->win, data->enemy[data->e_ani], data->e_nmb[data->e_index].e_y * data->width, data->e_nmb[data->e_index].e_x * data->height);
+	}
+	else if (wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1])
 		|| wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
 	{
 		if (data->e_nmb[data->e_index].moves)
@@ -133,6 +142,14 @@ void choose_direction(t_info *data)
 	}
 }
 
+void left_or_right(t_info *data)
+{
+	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1]))
+		data->e_nmb[data->e_index].moves = 1;
+	else if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
+		data->e_nmb[data->e_index].moves = 0;
+}
+
 int render_enemy(t_info *data)
 {
 	idle_animation(data);
@@ -141,17 +158,14 @@ int render_enemy(t_info *data)
 	data->e_nmb[data->e_index].pre_x = data->e_nmb[data->e_index].e_x;
 	data->e_nmb[data->e_index].pre_y = data->e_nmb[data->e_index].e_y;
 
+	left_or_right(data);
 	choose_direction(data);
-	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y - 1]))
-		data->e_nmb[data->e_index].moves = 1;
-	if (!wall_enemy_coin(data->map[data->e_nmb[data->e_index].e_x][data->e_nmb[data->e_index].e_y + 1]))
-		data->e_nmb[data->e_index].moves = 0;
+	left_or_right(data);
 	touch_enemy(data);
 	usleep(50000);
 	data->e_index++;
 	return (0);
 }
-
 
 int main(int ac, char *av[])
 {
