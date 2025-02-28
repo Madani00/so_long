@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 21:27:45 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/28 22:16:19 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,15 @@ void check_map_valid(char **av, t_info **data)
 	get_mapsize(av, data);
 	check_map_walls(data);
 	check_all_map(data);
-	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PCA");
+	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PECA");
+
+	int i = 0;// lll]]]
+	while (i < (*data)->column)
+	{
+		printf("%s \n", (*data)->c_map[i]);
+		i++;
+	}
+
 	if (!correct_components(data))
 	{
 		free_map(data);
@@ -96,7 +104,7 @@ int increment_components(char *targets, char pos, t_info **data)
 	int i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 5)
 	{
 		if (targets[i] == pos)
 		{
@@ -104,6 +112,8 @@ int increment_components(char *targets, char pos, t_info **data)
 				(*data)->player++;
 			else if (targets[i] == 'C')
 				(*data)->collect++;
+			else if (targets[i] == 'E')
+				(*data)->exit++;
 			return (0);
 		}
 		i++;
@@ -116,8 +126,6 @@ void flood_fill(t_info **data, int x, int y, char *target)
 	if (x < 0 || x >= (*data)->column || y < 0 || y >= (*data)->row)
 		return;
 	if (increment_components(target, (*data)->c_map[x][y], data))
-		return;
-	if ((*data)->c_map[x][y] == 'x')
 		return;
 	(*data)->c_map[x][y] = 'x';
 	flood_fill(data, x + 1, y, target);
