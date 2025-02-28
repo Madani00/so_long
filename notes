@@ -154,4 +154,13 @@ enemy
 10000000000000000000000000000001
 11111111111111111111111111111111
 
+		//usleep(70000); // enemy <= 3
+		//usleep(40000);
+		//usleep(100000);
+		//usleep(20000); // enemy <= 6 7 8 9
+		//usleep(14000);  // 11 12 13 14
+		//usleep(9000); // 16 17 18 19
 
+in my logic i passed to mlx_loop_hook a funtion if i find enemy and apply the logic for all the enimies i added usleep(70000); to make the picture move not so fast this works with 3 enimies but when i have more then 3 the enimies seems to move slowly can you give me like a calculation that i can do when i have the number of enemies increase , decrease the usleep(), i aslo noticed that //usleep(20000); // enemy <= 6 7 8 9
+		//usleep(14000);  // 11 12 13 14
+		//usleep(9000); // 16 17 18 19 seem to look goood 

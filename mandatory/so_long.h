@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/27 14:32:51 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/28 15:27:28 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct map
 	int animation;
 	int width;
 	int height;
-	// void *effect;
 	void *enemy[5];
 	int e_ani;
 	t_enemy e_nmb[100];
@@ -118,5 +117,11 @@ int wall_enemy_coin(char c);
 void window_size_error(t_info *data);
 void free_images3(t_info *data);
 void touch_enemy(t_info *data);
+void	idle_animation(t_info *data);
+int	wall_enemy_coin(char c);
+void	if_door_enemy(t_info *data, int *k, int *i);
+void	choose_direction(t_info *data);
+void	left_or_right(t_info *data);
+void	moving_player(t_info *data, int keycode);
 
 #endif
