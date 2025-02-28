@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/27 14:27:54 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:36:35 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void initiaze_struct(t_info **data)
 	(*data)->e_nmb->moves = 0;
 	(*data)->e_index = 0;
 	(*data)->e_ani = 0;
+	(*data)->enemy_nmb = 0; // you can remove it
 }
 
 void get_mapsize(char **av, t_info **data)

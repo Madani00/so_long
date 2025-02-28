@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/27 14:29:30 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:32:51 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct map
 	int previous_x;
 	int previous_y;
 	int moves;
-	// int animation;
+	int animation;
 	int width;
 	int height;
 	// void *effect;
