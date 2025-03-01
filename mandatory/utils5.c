@@ -6,13 +6,13 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 21:21:44 by eamchart          #+#    #+#             */
-/*   Updated: 2025/03/01 12:24:15 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:41:22 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void free_images3(t_info *data)
+void	free_images3(t_info *data)
 {
 	if (data->enemy[0])
 		mlx_destroy_image(data->mlx, data->enemy[0]);
@@ -26,9 +26,10 @@ void free_images3(t_info *data)
 		mlx_destroy_image(data->mlx, data->enemy[4]);
 }
 
-void touch_enemy(t_info *data)
+void	touch_enemy(t_info *data)
 {
-	if ((data->e_nmb[data->e_index].e_x == data->player_x && data->e_nmb[data->e_index].e_y == data->player_y))
+	if ((data->e_nmb[data->e_index].e_x == data->player_x
+			&& data->e_nmb[data->e_index].e_y == data->player_y))
 	{
 		free_images(data);
 		free_minilbx(data);

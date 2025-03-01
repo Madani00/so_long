@@ -6,40 +6,42 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:46:12 by eamchart          #+#    #+#             */
-/*   Updated: 2025/03/01 12:07:56 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:32:14 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void draw_wall_helper(t_info *game, int *k, int *i)
+void	draw_wall_helper(t_info *game, int *k, int *i)
 {
 	while (*i < game->row && *k % 2 == 0)
 	{
 		if (game->map[*k][*i] == '1')
 			mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
-									*i * game->width, *k * game->height);
+				*i * game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
 			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1,
-									*i * game->width, *k * game->height);
+				*i * game->width, *k * game->height);
 		(*i)++;
 	}
 	while (*i < game->row && *k % 2 != 0)
 	{
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img1,
+				*i * game->width, *k * game->height);
 		(*i)++;
 		if (game->map[*k][*i] == '1')
-			mlx_put_image_to_window(game->mlx, game->win, game->wall_img, *i * game->width, *k * game->height);
+			mlx_put_image_to_window(game->mlx, game->win, game->wall_img,
+				*i * game->width, *k * game->height);
 		(*i)++;
 	}
 }
 
-void draw_wall(t_info *game)
+void	draw_wall(t_info *game)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	k = 0;
 	while (k < game->column)
@@ -50,7 +52,7 @@ void draw_wall(t_info *game)
 	}
 }
 
-void reach_door_exit(t_info *data)
+void	reach_door_exit(t_info *data)
 {
 	if (data->map[data->player_x][data->player_y] == 'E' && data->collect == 0)
 	{
@@ -61,11 +63,12 @@ void reach_door_exit(t_info *data)
 	}
 }
 
-void check_map_walls(t_info **data)
+void	check_map_walls(t_info **data)
 {
-	int i;
+	int	i;
 
-	if (!check_ones((*data)->map[0]) || !check_ones((*data)->map[(*data)->column - 1]))
+	if (!check_ones((*data)->map[0])
+		|| !check_ones((*data)->map[(*data)->column - 1]))
 	{
 		free_map(data);
 		free_error((*data), "Oops! This map is invalid dummy 😓");
@@ -84,10 +87,10 @@ void check_map_walls(t_info **data)
 	}
 }
 
-int correct_components(t_info **data)
+int	correct_components(t_info **data)
 {
-	int i;
-	int jj;
+	int	i;
+	int	jj;
 
 	if ((*data)->player != 1 || (*data)->collect == 0)
 		return (0);
@@ -97,10 +100,12 @@ int correct_components(t_info **data)
 		jj = 1;
 		while (jj < (*data)->row - 1)
 		{
-			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C' || (*data)->c_map[i][jj] == 'E')
+			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C'
+				|| (*data)->c_map[i][jj] == 'E')
 				return (0);
-			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1'
-				&& (*data)->c_map[i][jj] != '0' && (*data)->c_map[i][jj] != 'A')
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' &&
+				(*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0' &&
+					(*data)->c_map[i][jj] != 'A')
 				return (0);
 			jj++;
 		}

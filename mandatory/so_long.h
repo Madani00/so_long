@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:39 by eamchart          #+#    #+#             */
-/*   Updated: 2025/03/01 10:56:19 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:26:36 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,6 @@ void		if_door_enemy(t_info *data, int *k, int *i);
 void		choose_direction(t_info *data);
 void		left_or_right(t_info *data);
 void		moving_player(t_info *data, int keycode);
+void		check_all_map(t_info **data);
 
 #endif

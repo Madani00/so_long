@@ -6,13 +6,13 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 15:10:25 by eamchart          #+#    #+#             */
-/*   Updated: 2025/03/01 11:17:51 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 14:28:20 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void initiaze_struct(t_info **data)
+void	initiaze_struct(t_info **data)
 {
 	(*data) = malloc(sizeof(t_info));
 	(*data)->map = NULL;
@@ -32,11 +32,11 @@ void initiaze_struct(t_info **data)
 	(*data)->enemy_nmb = 0;
 }
 
-void get_mapsize(char **av, t_info **data)
+void	get_mapsize(char **av, t_info **data)
 {
-	char *line;
-	int fd;
-	char *all_lines;
+	char	*line;
+	int		fd;
+	char	*all_lines;
 
 	fd = open(av[1], O_RDONLY);
 	all_lines = NULL;
@@ -60,10 +60,10 @@ void get_mapsize(char **av, t_info **data)
 	allocate_map(all_lines, data);
 }
 
-void allocate_map(char *all_lines, t_info **data)
+void	allocate_map(char *all_lines, t_info **data)
 {
-	char **lines;
-	int index;
+	char	**lines;
+	int		index;
 
 	if ((*data)->column < 3 || (*data)->row < 3)
 	{
@@ -86,9 +86,9 @@ void allocate_map(char *all_lines, t_info **data)
 	free_args(lines);
 }
 
-int check_ones(char *str)
+int	check_ones(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -101,9 +101,9 @@ int check_ones(char *str)
 	return (1);
 }
 
-void get_player_position(t_info **data, char *map_row, int index)
+void	get_player_position(t_info **data, char *map_row, int index)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (*data)->row)
