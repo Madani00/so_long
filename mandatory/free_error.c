@@ -6,15 +6,15 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 11:37:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/23 09:14:58 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:13:34 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void free_args(char **arg)
+void	free_args(char **arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (arg[i] != NULL)
@@ -25,9 +25,9 @@ void free_args(char **arg)
 	free(arg);
 }
 
-void free_map(t_info **data)
+void	free_map(t_info **data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < (*data)->column)
@@ -40,13 +40,13 @@ void free_map(t_info **data)
 	free((*data)->c_map);
 }
 
-void free_error(t_info *data, char *msg)
+void	free_error(t_info *data, char *msg)
 {
 	free(data);
 	ft_error(msg);
 }
 
-void free_images(t_info *data)
+void	free_images(t_info *data)
 {
 	if (data->wall_img)
 		mlx_destroy_image(data->mlx, data->wall_img);
@@ -75,7 +75,7 @@ void free_images(t_info *data)
 	free_images2(data);
 }
 
-void free_minilbx(t_info *data)
+void	free_minilbx(t_info *data)
 {
 	if (data->win != NULL)
 		mlx_destroy_window(data->mlx, data->win);

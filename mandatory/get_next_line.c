@@ -6,16 +6,16 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:49:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/28 21:00:29 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:15:27 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-char *fetch_line(char *buffer)
+char	*fetch_line(char *buffer)
 {
-	char *line;
-	size_t i;
+	char	*line;
+	size_t	i;
 
 	i = 0;
 	while (buffer[i] != '\n' && buffer[i])
@@ -26,9 +26,9 @@ char *fetch_line(char *buffer)
 	return (line);
 }
 
-char *allocation(int fd)
+char	*allocation(int fd)
 {
-	char *ptr;
+	char	*ptr;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -38,12 +38,12 @@ char *allocation(int fd)
 	return (ptr);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	ssize_t readd;
-	static char *s_buffer;
-	char *file_data;
-	char *save;
+	ssize_t		readd;
+	static char	*s_buffer;
+	char		*file_data;
+	char		*save;
 
 	file_data = allocation(fd);
 	if (!file_data)
@@ -65,11 +65,11 @@ char *get_next_line(int fd)
 	return (s_buffer = NULL, free(file_data), save);
 }
 
-char *join(char *s1, char *s2)
+char	*join(char *s1, char *s2)
 {
-	char *new;
-	size_t i;
-	size_t j;
+	char	*new;
+	size_t	i;
+	size_t	j;
 
 	if (!s1)
 		return (ft_strdup(s2));
@@ -87,18 +87,20 @@ char *join(char *s1, char *s2)
 	return (new);
 }
 
-void print_moves(t_info *data, int previous_x, int previous_y)
+void	print_moves(t_info *data, int previous_x, int previous_y)
 {
-	char *move;
-	char *s_move;
-	int position;
+	char	*move;
+	char	*s_move;
+	int		position;
 
 	move = ft_itoa(data->moves);
 	s_move = ft_strjoin("Moves  :  ", move);
 	position = data->column * data->height + 20;
-	if ((data->player_x != previous_x && data->player_y == previous_y) || (data->player_x == previous_x && data->player_y != previous_y))
+	if ((data->player_x != previous_x && data->player_y == previous_y)
+		|| (data->player_x == previous_x && data->player_y != previous_y))
 	{
-		mlx_put_image_to_window(data->mlx, data->win, data->empty_img, 60, position - 20);
+		mlx_put_image_to_window(data->mlx, data->win,
+			data->empty_img, 60, position - 20);
 		mlx_string_put(data->mlx, data->win, 20, position, 0xFF0000, s_move);
 		ft_printf("%s \n", s_move);
 		data->moves++;

@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 22:55:06 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/28 22:16:19 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 10:58:31 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void check_map_exetension(char *map_file)
 	char *start;
 
 	start = &map_file[ft_strlen(map_file) - 4];
+	if (ft_strcmp(map_file, "maps/..ber") == 0 || ft_strcmp(map_file, "maps/.ber") == 0)
+	{
+		ft_error("Map not found dummy 🌍");
+		exit(EXIT_FAILURE);
+	}
 	if ((ft_strncmp(start, ".ber", 4) != 0))
 	{
 		ft_error("Map not found dummy 🌍");
@@ -83,14 +88,6 @@ void check_map_valid(char **av, t_info **data)
 	check_map_walls(data);
 	check_all_map(data);
 	flood_fill(data, (*data)->player_x, (*data)->player_y, "0PECA");
-
-	int i = 0;// lll]]]
-	while (i < (*data)->column)
-	{
-		printf("%s \n", (*data)->c_map[i]);
-		i++;
-	}
-
 	if (!correct_components(data))
 	{
 		free_map(data);

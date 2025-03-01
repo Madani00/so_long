@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 18:46:12 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/28 21:55:17 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 12:07:56 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,10 @@ int correct_components(t_info **data)
 		jj = 1;
 		while (jj < (*data)->row - 1)
 		{
-			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C')
+			if ((*data)->c_map[i][jj] == 'P' || (*data)->c_map[i][jj] == 'C' || (*data)->c_map[i][jj] == 'E')
 				return (0);
-			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1' && (*data)->c_map[i][jj] != '0')
+			if ((*data)->c_map[i][jj] != 'x' && (*data)->c_map[i][jj] != 'E' && (*data)->c_map[i][jj] != '1'
+				&& (*data)->c_map[i][jj] != '0' && (*data)->c_map[i][jj] != 'A')
 				return (0);
 			jj++;
 		}

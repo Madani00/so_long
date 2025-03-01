@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:51:19 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/28 21:55:39 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 12:21:41 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	render_enemy(t_info *data)
 		data->e_nmb[data->e_index].pre_y = data->e_nmb[data->e_index].e_y;
 		left_or_right(data);
 		choose_direction(data);
-		left_or_right(data);
 		touch_enemy(data);
 		usleep(210000 / data->enemy_nmb);
 		data->e_index++;

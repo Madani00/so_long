@@ -77,6 +77,30 @@ int render_player(s_info *data)
 3 - Draw the enemy at the new position – After updating the position, draw the enemy sprite in the new location.
 4 - Handle movement boundaries – If the enemy reaches a certain limit (like a wall or a max distance), make it change direction or stop moving.
 
+---
 
+```bash
+typedef struct enemy
+{
+	int e_x;
+	int e_y;
+	int moves;
+	int pre_x;
+	int pre_y;
+} t_enemy;
 
-
+t_enemy e_nmb[1000];
+```
+- declares an array named e_nmb that can hold 1000 instances of the t_enemy structure.
+- 1000 bytes = 1 KB
+---
+- how to calculate how many bytes in the photo:
+ 60 * 60 pixels = 3600 pixels
+ 3600 * 4 bytes or 3 bytes =
+---
+- subject : `*.ber` so means a file with `.ber` is invalid cause `*` says it must be something , about the `..ber ` is bullshit
+---
+- this one should not segfault
+`valgrind so_long/so_long so_long/maps/map6.ber`
+---
+-  **Esc + Enter** in the terminal `zsh` can cause the shell or program to wait for more input,

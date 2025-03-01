@@ -6,7 +6,7 @@
 /*   By: eamchart <eamchart@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 12:44:23 by eamchart          #+#    #+#             */
-/*   Updated: 2025/02/26 21:21:20 by eamchart         ###   ########.fr       */
+/*   Updated: 2025/03/01 11:11:48 by eamchart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int cross_close(t_info *data)
 
 	free_images(data);
 	free_minilbx(data);
-	exit(1);
+	exit(EXIT_FAILURE);
 }
 
 void  load_enemy(t_info *data)
@@ -68,7 +68,7 @@ void  load_enemy(t_info *data)
 
 void window_size_error(t_info *data)
 {
-	if (data->row * data->width > 1920 || data->column * data->height > 1080)
+	if (data->row * data->width > 1920 || data->column * data->height > 1060)
 	{
 		free_map(&data);
 		free_error(data, "Oops! map's SIZE is huge 😓");
