@@ -39,8 +39,8 @@ https://pixlr.com/express/
 - X client (application ): interact with the hardware on your machine
 - The X server runs on your computer, and the clients can run either on the same machine or on a remote machine (over a network).
 EXAMPLE : if i want to access a machine remotely and run an app that requires env to run then i can get to that machine to send me commands necessary to draw the pictures on my machine
-
-
+- X clients connect to an X server, and they speak an X11 protocol, clients can send requests to ask the X server to do something. A simple example of a request is CreateWindow.  clients need to tell the X server which events they're interested in.
+- MiniLibX internally uses XOpenDisplay() (Xlib function) to connect to the X server.
 
 ---
 - to check which one used by your system
@@ -49,35 +49,6 @@ echo $XDG_SESSION_TYPE
 - Idle Animations
 when your player still moves without pressing anything
 
-
-Final Effect
-
-✔️ Press Left → Player moves left + animated movement frames
-✔️ Press Nothing → Player stays in place but has a small "idle effect"
-✔️ Press Right → Player moves right with animation
-
-
-//  int moving; 1 = moving, 0 = idle
-
-int render_player(s_info *data)
-{
-    if (data->player.moving)
-        data->player.frame = (data->player.frame + 1) % 4; // Change frame for movement
-    else
-        data->player.frame = (data->player.frame + 1) % 2; // Smaller animation for idle
-
-    mlx_put_image_to_window(data->mlx, data->win,
-        data->player.sprites[data->player.direction][data->player.frame],
-        data->player.x * TILE_SIZE, data->player.y * TILE_SIZE);
-    return (0);
-}
-
-1 - Erase the old enemy position – Instead of redrawing everything, just redraw the tile that was underneath the enemy (like the floor or background). This ensures the old enemy sprite is removed cleanly.
-2 - Update the enemy's position – Change the enemy’s coordinates based on its movement logic. If the enemy moves left or right, update its X position. If it moves up or down, update its Y position.
-3 - Draw the enemy at the new position – After updating the position, draw the enemy sprite in the new location.
-4 - Handle movement boundaries – If the enemy reaches a certain limit (like a wall or a max distance), make it change direction or stop moving.
-
----
 
 ```bash
 typedef struct enemy

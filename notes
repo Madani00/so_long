@@ -166,3 +166,9 @@ what is
 (*data)->e_index = 0;         enemy number 0 in the struct and so on
 	(*data)->e_ani = 0;
 	(*data)->enemy_nmb = 0;   i used this to store how many enemies i have, bc the e_index is changing in each loop
+data->e_nmb[data->e_index].moves     which direction to move to left or right
+
+
+----
+- no player in the map, flood fill give some invalid read size
+- the moves must appear on screan 'moves : 0'
