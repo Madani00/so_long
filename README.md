@@ -75,3 +75,12 @@ t_enemy e_nmb[1000];
 `valgrind so_long/so_long so_long/maps/map6.ber`
 ---
 -  **Esc + Enter** in the terminal `zsh` can cause the shell or program to wait for more input,
+
+
+![Screencastfrom07-02-2025110058AM-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/7aac983f-0799-4eb7-b8ea-33a14f899ede)
+
+
+
+
+
+
